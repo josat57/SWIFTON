@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/nick"
+    android:layout_gravity="center"
+    app:layout_anchorGravity="center"
+    tools:context=".HomeFragment">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#5effffff">
+
+        <TextView
+            android:id="@+id/label1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:fontFamily="@font/gasalt_black"
+            android:textSize="90sp"
+            android:background="#6c1e1d1d"
+            android:layout_marginTop="200dp"
+            android:textAlignment="center"
+            android:scaleX="1.1"
+            android:scaleY="1.1"/>
+
+        <TextView
+            android:id="@+id/home_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gasalt_black"
+            android:hint="date"
+            android:padding="10dp"
+            android:layout_below="@+id/label1"
+            android:layout_marginTop="-20dp"
+            android:elevation="@dimen/nav_header_height"
+            android:textSize="50sp" />
+
+    </RelativeLayout>
+
+</FrameLayout>

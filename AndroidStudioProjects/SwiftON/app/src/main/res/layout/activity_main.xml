@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/billboard"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/header">
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="#876008ac"
+            android:padding="10dp"
+            android:text="Home Page"
+            android:textColor="#fff"
+            android:textSize="40sp"
+            android:fontFamily="@font/gasalt_regular"
+            android:textAlignment="center"/>
+    </RelativeLayout>
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_below="@+id/header"
+       android:gravity="center"
+       android:background="#8dffffff">
+
+       <Button
+           android:layout_width="300dp"
+           android:layout_height="wrap_content"
+           android:layout_centerHorizontal="true"
+           android:text="Signup"
+           android:textSize="30sp"
+           android:background="@drawable/bluebutton"
+           android:layout_below="@+id/header"
+           android:layout_marginTop="10dp"
+           android:textAllCaps="false"
+           android:fontFamily="@font/gasalt_regular"
+           android:padding="15dp"
+           android:id="@+id/cmdSignup"/>
+
+       <Button
+           android:layout_width="300dp"
+           android:layout_height="wrap_content"
+           android:layout_centerHorizontal="true"
+           android:text="Shops"
+           android:textSize="30sp"
+           android:background="@drawable/round_button"
+           android:layout_below="@+id/cmdSignup"
+           android:layout_marginTop="15dp"
+           android:textAllCaps="false"
+           android:fontFamily="@font/gasalt_regular"
+           android:padding="15dp"
+           android:id="@+id/cmdShops"/>
+       <Button
+           android:layout_width="300dp"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/cmdShops"
+           android:layout_centerHorizontal="true"
+           android:layout_marginTop="15dp"
+           android:text="Login"
+           android:textSize="30sp"
+           android:background="@drawable/greenbutton"
+           android:textAllCaps="false"
+           android:fontFamily="@font/gasalt_regular"
+           android:padding="15dp"
+           android:id="@+id/cmdLogin"/>
+   </RelativeLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Exit"
+        android:textSize="30sp"
+        android:background="#6008ac"
+        android:textAllCaps="false"
+        android:fontFamily="@font/gasalt_regular"
+
+        android:id="@+id/cmdExit"/>
+
+</RelativeLayout>

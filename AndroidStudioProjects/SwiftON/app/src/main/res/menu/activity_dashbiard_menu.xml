@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_person_add"
+            android:title="Update Profile" />
+        <item
+            android:id="@+id/nav_cart"
+            android:icon="@drawable/ic_email"
+            android:title="View Cart" />
+        <item
+            android:id="@+id/nav_measurement"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Take Measurement" />
+
+        <item
+            android:id="@+id/nav_vendour"
+            android:icon="@drawable/ic_person_add"
+            android:title="Become a Vendour" />
+
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Send" />
+        </menu>
+    </item>
+
+    <group android:checkableBehavior="single">
+        <item android:title="Advanced User">
+            <menu>
+                <item
+                    android:id="@+id/nav_settings"
+                    android:title="Settings"
+                    android:icon="@drawable/ic_key"
+                    />
+            </menu>
+        </item>
+    </group>
+
+</menu>

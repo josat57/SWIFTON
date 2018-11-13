@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/nick"
+    tools:context=".VendorProfileFragment">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#79383636">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:id="@+id/vendorlabel1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Vendor Profile"
+                android:textSize="40sp"
+                android:fontFamily="@font/gasalt_black"
+                android:textAlignment="center"
+                android:padding="10dp"/>
+
+            <EditText
+                android:id="@+id/vendemail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:hint="@string/email"
+                android:textSize="20sp"
+                android:drawableEnd="@drawable/ic_email"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="15dp"
+                android:inputType="textEmailAddress"
+                android:layout_below="@+id/vendorlabel1"/>
+
+            <EditText
+                android:id="@+id/vendpswrd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:hint="@string/password"
+                android:textSize="20sp"
+                android:drawableEnd="@drawable/ic_email"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="15dp"
+                android:inputType="textPassword"
+                android:layout_below="@+id/vendemail"/>
+
+            <EditText
+                android:id="@+id/vendfname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:hint="Firstname"
+                android:textSize="20sp"
+                android:drawableEnd="@drawable/ic_email"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="15dp"
+                android:inputType="textPersonName"
+                android:layout_below="@+id/vendpswrd"/>
+
+            <EditText
+                android:id="@+id/vendlname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:hint="Lastname"
+                android:textSize="20sp"
+                android:drawableEnd="@drawable/ic_email"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="15dp"
+                android:inputType="textPersonName"
+                android:layout_below="@+id/vendfname"/>
+
+            <EditText
+                android:id="@+id/vendaddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:hint="Address"
+                android:textSize="20sp"
+                android:drawableEnd="@drawable/ic_email"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="15dp"
+                android:inputType="textPersonName"
+                android:layout_below="@+id/vendlname"/>
+
+            <EditText
+                android:id="@+id/vendcountry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:hint="Country"
+                android:textSize="20sp"
+                android:drawableEnd="@drawable/ic_email"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="15dp"
+                android:inputType="textPersonName"
+                android:layout_below="@+id/vendaddress"/>
+
+            <EditText
+                android:id="@+id/vendstate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:hint="State"
+                android:textSize="20sp"
+                android:drawableEnd="@drawable/ic_email"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="15dp"
+                android:inputType="textPersonName"
+                android:layout_below="@+id/vendcountry"/>
+
+            <EditText
+                android:id="@+id/vendcity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:hint="City"
+                android:textSize="20sp"
+                android:drawableEnd="@drawable/ic_email"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="15dp"
+                android:inputType="textPersonName"
+                android:layout_below="@+id/vendstate"/>
+
+            <EditText
+                android:id="@+id/vendphone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:hint="Phone"
+                android:textSize="20sp"
+                android:drawableEnd="@drawable/ic_email"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="15dp"
+                android:inputType="textPersonName"
+                android:layout_below="@+id/vendcity"/>
+
+            <EditText
+                android:id="@+id/vendposition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:hint="Position"
+                android:textSize="20sp"
+                android:drawableEnd="@drawable/ic_email"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="15dp"
+                android:inputType="textPersonName"
+                android:layout_below="@+id/vendphone"/>
+
+
+            <Button
+                android:id="@+id/cmdcontinue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:padding="10dp"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="#fff"
+                android:textSize="30sp"
+                android:fontFamily="@font/gasalt_black"
+                android:text="Continue"
+                android:drawableEnd="@drawable/ic_arrow_forward"/>
+
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+
+</FrameLayout>

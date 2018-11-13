@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/nick"
+    tools:context=".CompanyProfileFragment">
+
+   <android.support.v4.widget.NestedScrollView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:background="#8f000000">
+
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+
+           <ImageView
+               android:id="@+id/comlogo"
+               android:layout_width="100dp"
+               android:layout_height="100dp"
+               android:scaleType="centerCrop"
+               android:scaleY="1.1"
+               android:scaleX = "1.1"
+               android:layout_centerHorizontal="true"
+               android:src="@drawable/ic_person"
+               android:layout_margin="20dp"/>
+
+           <EditText
+               android:id="@+id/comname"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:padding="10dp"
+               android:hint="Companyname"
+               android:textSize="20sp"
+               android:drawableEnd="@drawable/ic_attach_file"
+               android:layout_marginStart="30dp"
+               android:layout_marginEnd="30dp"
+               android:layout_marginTop="15dp"
+               android:inputType="textPersonName"
+               android:layout_below="@+id/comlogo"/>
+
+           <EditText
+               android:id="@+id/comregno"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:padding="10dp"
+               android:hint="Company Regno"
+               android:textSize="20sp"
+               android:drawableEnd="@drawable/ic_dialpad"
+               android:layout_marginStart="30dp"
+               android:layout_marginEnd="30dp"
+               android:layout_marginTop="15dp"
+               android:inputType="textPersonName"
+               android:layout_below="@+id/comname"/>
+
+           <EditText
+               android:id="@+id/comaddress"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:padding="10dp"
+               android:hint="Address"
+               android:textSize="20sp"
+               android:drawableEnd="@drawable/ic_pin_drop"
+               android:layout_marginStart="30dp"
+               android:layout_marginEnd="30dp"
+               android:layout_marginTop="15dp"
+               android:inputType="textPersonName"
+               android:layout_below="@+id/comregno"/>
+
+           <EditText
+               android:id="@+id/comcountry"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:padding="10dp"
+               android:hint="Country"
+               android:textSize="20sp"
+               android:drawableEnd="@drawable/ic_my_location"
+               android:layout_marginStart="30dp"
+               android:layout_marginEnd="30dp"
+               android:layout_marginTop="15dp"
+               android:inputType="textPersonName"
+               android:layout_below="@+id/comaddress"/>
+
+           <EditText
+               android:id="@+id/comstate"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:padding="10dp"
+               android:hint="State"
+               android:textSize="20sp"
+               android:drawableEnd="@drawable/ic_navigation"
+               android:layout_marginStart="30dp"
+               android:layout_marginEnd="30dp"
+               android:layout_marginTop="15dp"
+               android:inputType="textPersonName"
+               android:layout_below="@+id/comcountry"/>
+
+           <EditText
+               android:id="@+id/comcity"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:padding="10dp"
+               android:hint="City"
+               android:textSize="20sp"
+               android:drawableEnd="@drawable/ic_near_me"
+               android:layout_marginStart="30dp"
+               android:layout_marginEnd="30dp"
+               android:layout_marginTop="15dp"
+               android:inputType="textPersonName"
+               android:layout_below="@+id/comstate"/>
+
+           <EditText
+               android:id="@+id/comemail"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:padding="10dp"
+               android:hint="Email"
+               android:textSize="20sp"
+               android:drawableEnd="@drawable/ic_email"
+               android:layout_marginStart="30dp"
+               android:layout_marginEnd="30dp"
+               android:layout_marginTop="15dp"
+               android:inputType="textPersonName"
+               android:layout_below="@+id/comcity"/>
+
+           <EditText
+               android:id="@+id/comphone"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:padding="10dp"
+               android:hint="Phone"
+               android:textSize="20sp"
+               android:drawableEnd="@drawable/ic_phonelink_ring"
+               android:layout_marginStart="30dp"
+               android:layout_marginEnd="30dp"
+               android:layout_marginTop="15dp"
+               android:inputType="textPersonName"
+               android:layout_below="@+id/comemail"/>
+
+           <EditText
+               android:id="@+id/comurl"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:padding="10dp"
+               android:hint="website"
+               android:textSize="20sp"
+               android:drawableEnd="@drawable/ic_public"
+               android:layout_marginStart="30dp"
+               android:layout_marginEnd="30dp"
+               android:layout_marginTop="15dp"
+               android:inputType="textPersonName"
+               android:layout_below="@+id/comphone"/>
+
+           <EditText
+               android:id="@+id/comzipcode"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:padding="10dp"
+               android:hint="Zipcode"
+               android:textSize="20sp"
+               android:drawableEnd="@drawable/ic_confirmation_number"
+               android:layout_marginStart="30dp"
+               android:layout_marginEnd="30dp"
+               android:layout_marginTop="15dp"
+               android:inputType="textPersonName"
+               android:layout_below="@+id/comurl"/>
+
+           <Button
+               android:id="@+id/cmdsubmit"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_alignParentBottom="true"
+               android:padding="10dp"
+               android:background="@color/colorPrimaryDark"
+               android:textColor="#fff"
+               android:textSize="30sp"
+               android:fontFamily="@font/gasalt_black"
+               android:text="submit"
+               android:drawableEnd="@drawable/ic_arrow_forward"/>
+
+       </RelativeLayout>
+
+
+   </android.support.v4.widget.NestedScrollView>
+
+</FrameLayout>
