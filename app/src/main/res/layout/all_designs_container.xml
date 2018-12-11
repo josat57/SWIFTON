@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:padding="5dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/fragment_all_designs"
+    tools:context="com.swifton.swifton.Fragments.AllDesignsFragment">
+
+    <com.mancj.materialsearchbar.MaterialSearchBar
+        android:id="@+id/search_allDesigns"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:mt_speechMode="false"
+        app:defaultQueryHint="Find Current Events...">
+
+    </com.mancj.materialsearchbar.MaterialSearchBar>
+
+    <!--<android.support.v4.widget.NestedScrollView-->
+        <!--android:id="@+id/nestedScrollView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_below="@id/search_allDesigns"-->
+        <!--android:layout_marginTop="10dp">-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/search_edit_frame"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/search_allDesigns"
+            android:orientation="vertical">
+
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewAllDesigns"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                class="android.support.v7.widget.RecyclerView"/>
+
+        </LinearLayout>
+
+    <!--</android.support.v4.widget.NestedScrollView>-->
+
+</RelativeLayout>
+

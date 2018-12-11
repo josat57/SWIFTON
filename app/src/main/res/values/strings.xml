@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">SwiftON</string>
+    <string name="signup">Signup</string>
+    <string name="user_device_id">User Device ID</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="header_banner">header banner</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="signuphere">No account yet? Signup Here</string>
+    <string name="Loginhere">Have an account? Login Here</string>
+    <string name="title_activity_user_dashboard">UserDashboardActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+</resources>

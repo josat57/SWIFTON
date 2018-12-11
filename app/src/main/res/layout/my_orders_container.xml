@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:padding="5dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/fragment_my_orders"
+    tools:context="com.swifton.swifton.Fragments.MyOrdersFragment">
+
+    <com.mancj.materialsearchbar.MaterialSearchBar
+        android:id="@+id/search_MyOrders"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#34c"
+        app:mt_speechMode="false"
+        app:defaultQueryHint="Find Current Events...">
+
+    </com.mancj.materialsearchbar.MaterialSearchBar>
+
+    <!--<android.support.v4.widget.NestedScrollView-->
+        <!--android:id="@+id/nestedScrollView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_below="@id/search_MyOrders"-->
+        <!--android:layout_marginTop="10dp">-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/search_edit_frame"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/search_MyOrders"
+            android:orientation="vertical">
+
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewMyOrders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                class="android.support.v7.widget.RecyclerView"/>
+
+        </LinearLayout>
+
+    <!--</android.support.v4.widget.NestedScrollView>-->
+
+</RelativeLayout>
+

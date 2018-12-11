@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="2dp"
+    android:orientation="vertical"
+    app:cardElevation="6dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageViewThumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:scaleType="fitCenter"
+            android:scaleX="1.1"
+            android:scaleY="1.1"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/relText"
+            android:orientation="vertical"
+            android:background="#ba000000"
+            android:layout_marginTop="100dp">
+
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_light"
+                android:textSize="20sp"
+                android:padding="8dp"
+                android:hint="Product Title"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:id="@+id/textViewDes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_light"
+                android:layout_below="@id/textViewTitle"
+                android:hint="Product Description"
+                android:padding="8dp"
+                android:textSize="15sp" />
+            <TextView
+                android:id="@+id/prize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Prize: N25,000"
+                android:layout_below="@+id/textViewDes"
+                android:layout_marginTop="5dp"
+                android:padding="8dp"/>
+            <TextView
+                android:id="@+id/size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Size: XL"
+                android:layout_toEndOf="@+id/prize"
+                android:layout_below="@+id/textViewDes"
+                android:layout_marginTop="5dp"
+                android:padding="8dp"/>
+            <TextView
+                android:id="@+id/type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Type: Native Designer"
+                android:layout_toEndOf="@+id/size"
+                android:layout_below="@+id/textViewDes"
+                android:layout_marginTop="5dp"
+                android:padding="8dp"/>
+
+            <!--<ImageView-->
+                <!--android:layout_width="30dp"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:id="@+id/love"-->
+                <!--android:src="@drawable/ic_favorite"-->
+                <!--/>-->
+
+            <ImageView
+                android:id="@+id/loveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_favorite"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/type"
+                android:layout_marginEnd="10dp"
+                android:onClick="likeClick"
+                android:layout_marginTop="5dp"/>
+
+            <TextView
+                android:id="@+id/textdesigner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/prize"
+                android:hint="designers:"
+                android:padding="8dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="16sp"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

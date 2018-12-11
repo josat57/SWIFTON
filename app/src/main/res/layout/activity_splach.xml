@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/modernessentialstyle"
+    android:id="@+id/linlay"
+    tools:context="com.swifton.swifton.SplashActivity">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/swiftonmontage"
+        android:gravity="center">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="90dp"
+            app:cardPreventCornerOverlap="true"
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="#00ffffff">
+
+            <ImageView
+                android:id="@+id/applogo"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:src="@drawable/swifton_logo_splash" />
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:id="@+id/productname"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_thin"
+            android:text="Don't rush, SwiftON!"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="25sp"
+            android:typeface="normal"
+            android:visibility="visible" />
+    </LinearLayout>
+</RelativeLayout>
