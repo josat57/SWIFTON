@@ -12,21 +12,20 @@
         android:id="@+id/banner"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@color/colorPrimaryDark">
+        android:background="?attr/colorPrimaryDark">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="#68ffffff">
 
             <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/circleimage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
-                android:src="@drawable/ic_person_add"
-                android:scaleType="centerInside"
-                android:scaleX="1.0"
-                android:scaleY="1.0"
+                android:elevation="8dp"
+                android:src="@drawable/swifton_logo"
+                android:contentDescription="@string/header_banner"
                 />
         </RelativeLayout>
 
@@ -61,12 +60,12 @@
                 android:id="@+id/loginlabel1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="40sp"
-                android:text="Login"
-                android:textColor="#000"
+                android:textSize="30sp"
+                android:text="@string/login"
+                android:textColor="@color/colorGray"
                 android:layout_centerHorizontal="true"
                 android:textAlignment="center"
-                android:fontFamily="@font/roboto_regular"
+                android:fontFamily="@font/roboto_light"
                 android:layout_marginTop="-10dp"
                 android:padding="5dp"
                 />
@@ -76,14 +75,14 @@
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:hint="Email"
+                android:hint="@string/email"
                 android:layout_below="@+id/loginlabel1"
                 android:textColorHint="#222"
                 android:textColor="#222"
                 android:textSize="20sp"
                 android:inputType="textEmailAddress"
                 android:drawableEnd="@drawable/ic_email"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:padding="10dp"/>
 
             <EditText
@@ -91,40 +90,29 @@
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:textColorHint="#222"
                 android:textColor="#222"
                 android:textSize="20sp"
                 android:layout_below="@id/txtloginemail"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="10dp"
                 android:inputType="textPassword"
                 android:drawableEnd="@drawable/ic_key"
                 android:padding="10dp"/>
 
-
-            <CheckBox
-                android:id="@+id/loginchkRem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Remember Me!"
-                android:textSize="15sp"
-                android:layout_below="@+id/txtloginpswrd"
-                android:padding="5dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="40dp"
-                android:textColor="#222"/>
             <TextView
                 android:id="@+id/loginforgotlabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:layout_below="@+id/txtloginpswrd"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="15dp"
-                android:text="Forgot Password?"
-                android:layout_marginBottom="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/forgot_password"
+                android:layout_marginBottom="30dp"
                 android:textSize="15sp"
-                android:textColor="#222" />
+                android:textColor="@color/colorGray" />
 
 
         </RelativeLayout>
@@ -136,14 +124,14 @@
         android:layout_width="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-35dp"
-        android:layout_marginEnd="60dp"
-        android:layout_marginStart="60dp"
-        android:padding="20dp"
-        android:text="Login"
+        android:layout_marginTop="-25dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginStart="100dp"
+        android:padding="10dp"
+        android:text="@string/login"
         android:layout_below="@+id/cardview1"
-        android:background="@drawable/round_button"
-        android:fontFamily="@font/prostoone_regular"
+        android:background="@drawable/signlogbuttons"
+        android:fontFamily="@font/roboto_light"
         android:drawableEnd="@drawable/ic_arrow_forward"
         android:elevation="10dp"
         android:textSize="20sp"/>
@@ -154,9 +142,9 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:textSize="15sp"
-        android:text="Have an account? Login here"
+        android:text="@string/signuphere"
         android:textColor="#000"
-        android:fontFamily="@font/prostoone_regular"
+        android:fontFamily="@font/roboto_regular"
         android:padding="5dp"
         android:layout_below="@+id/loginbtn"
         android:layout_marginTop="10dp"

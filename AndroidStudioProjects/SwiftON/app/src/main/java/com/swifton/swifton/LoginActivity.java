@@ -15,6 +15,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.swifton.swifton.Helpers.AppSingleton;
+import com.swifton.swifton.Helpers.NetCheck;
 
 import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -30,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
 
     protected String enteredUsername;
 
-    String URL= "http:192.168.43.53/swiftonbe/app/login.php";
+    String URL= "http:10.11.32.26/swiftonbe/app/login.php";
     private static final String TAG = "RegisterActivity";
 
     private static final String TAG_SUCCESS = "success";
@@ -55,24 +57,29 @@ public class LoginActivity extends AppCompatActivity {
 
         cmd_LoginBtn.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 final String email = txtloginEmail.getText().toString().trim();
                 final String paswrd = txtloginPassword.getText().toString().trim();
                 final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+                if (NetCheck.isConnectedToInternet(getBaseContext())){
 
-                if (email.isEmpty() || paswrd.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "All fields are required", Toast.LENGTH_LONG).show();
-                } else if (!email.matches(emailPattern)) {
-                    Toast.makeText(getApplicationContext(), "Invalid email address", Toast.LENGTH_SHORT).show();
-                } else if (email.matches(emailPattern) && paswrd.length() >= 6) {
-                    loginUser(email, paswrd);
-                } else {
-                    Toast.makeText(getApplicationContext(), "Could not login...", Toast.LENGTH_LONG).show();
+                    if (email.isEmpty() || paswrd.isEmpty()) {
+                        Toast.makeText(getApplicationContext(), "All fields are required", Toast.LENGTH_LONG).show();
+                    } else if (!email.matches(emailPattern)) {
+                        Toast.makeText(getApplicationContext(), "Invalid email address", Toast.LENGTH_SHORT).show();
+                    } else if (email.matches(emailPattern) && paswrd.length() >= 6) {
+                        loginUser(email, paswrd);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Could not login...", Toast.LENGTH_LONG).show();
+                    }
+
+                }else {
+                    Toast.makeText(LoginActivity.this, "There is no internet connection", Toast.LENGTH_SHORT).show();
                 }
+
+
             }
         });
-
-
 
         SignupLabel.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -104,7 +111,7 @@ public class LoginActivity extends AppCompatActivity {
                         //String user = jObj.getJSONObject("response").getString("email");
                         String user = jObj.getString("email");
                         // Launch User activity
-                        Intent homeIntent = new Intent(getApplicationContext(), dashboardActivity.class);
+                        Intent homeIntent = new Intent(getApplicationContext(), UserDashboardActivity.class);
                         //homeIntent.putExtra("USERNAME", enteredUsername);
                         //homeIntent.putExtra("MESSAGE", "Login Successful!");
                         startActivity(homeIntent);

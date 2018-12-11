@@ -1,91 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/billboard"
+    android:background="#fff"
     tools:context=".MainActivity">
-
-    <RelativeLayout
+    <android.support.design.widget.CollapsingToolbarLayout
+        android:id="@+id/colltb"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:id="@+id/header">
+        android:layout_height="200dp"
+        android:background="?attr/colorPrimaryDark">
 
-        <TextView
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:background="#876008ac"
-            android:padding="10dp"
-            android:text="Home Page"
-            android:textColor="#fff"
-            android:textSize="40sp"
-            android:fontFamily="@font/gasalt_regular"
-            android:textAlignment="center"/>
-    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/header"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:background="#6ef4f3f5">
 
-   <RelativeLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:layout_below="@+id/header"
-       android:gravity="center"
-       android:background="#8dffffff">
+            <ImageView
+                android:id="@+id/logo2"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/swifton_logo"
+                android:layout_centerHorizontal="true"
+                android:padding="5dp"
+                android:elevation="6dp" />
 
-       <Button
-           android:layout_width="300dp"
-           android:layout_height="wrap_content"
-           android:layout_centerHorizontal="true"
-           android:text="Signup"
-           android:textSize="30sp"
-           android:background="@drawable/bluebutton"
-           android:layout_below="@+id/header"
-           android:layout_marginTop="10dp"
-           android:textAllCaps="false"
-           android:fontFamily="@font/gasalt_regular"
-           android:padding="15dp"
-           android:id="@+id/cmdSignup"/>
+            <TextView
+                android:id="@+id/intolabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:padding="10dp"
+                android:text="Welcome"
+                android:textColor="#ccc"
+                android:textSize="25sp"
+                android:layout_below="@+id/logo2"
+                android:fontFamily="@font/roboto_thin"
+                android:textAlignment="center"/>
+        </RelativeLayout>
 
-       <Button
-           android:layout_width="300dp"
-           android:layout_height="wrap_content"
-           android:layout_centerHorizontal="true"
-           android:text="Shops"
-           android:textSize="30sp"
-           android:background="@drawable/round_button"
-           android:layout_below="@+id/cmdSignup"
-           android:layout_marginTop="15dp"
-           android:textAllCaps="false"
-           android:fontFamily="@font/gasalt_regular"
-           android:padding="15dp"
-           android:id="@+id/cmdShops"/>
-       <Button
-           android:layout_width="300dp"
-           android:layout_height="wrap_content"
-           android:layout_below="@+id/cmdShops"
-           android:layout_centerHorizontal="true"
-           android:layout_marginTop="15dp"
-           android:text="Login"
-           android:textSize="30sp"
-           android:background="@drawable/greenbutton"
-           android:textAllCaps="false"
-           android:fontFamily="@font/gasalt_regular"
-           android:padding="15dp"
-           android:id="@+id/cmdLogin"/>
-   </RelativeLayout>
+    </android.support.design.widget.CollapsingToolbarLayout>
 
-    <Button
+    <android.support.v7.widget.CardView
+        android:id="@+id/newcarview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="Exit"
-        android:textSize="30sp"
-        android:background="#6008ac"
-        android:textAllCaps="false"
-        android:fontFamily="@font/gasalt_regular"
+        app:cardCornerRadius="10dp"
+        android:backgroundTint="#fff"
+        android:layout_below="@+id/colltb"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        app:cardElevation="8dp"
+        app:cardPreventCornerOverlap="true"
+        android:layout_marginTop="-50dp">
 
-        android:id="@+id/cmdExit"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/containerradius">
+
+            <Button
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:text="Signup"
+                android:textSize="30sp"
+                android:textAlignment="center"
+                android:background="@drawable/leftbtnshape"
+                android:textAllCaps="false"
+                android:fontFamily="@font/roboto_thin"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:id="@+id/cmdSignup"/>
+
+            <Button
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="Login"
+                android:textSize="30sp"
+                android:textAlignment="center"
+                android:background="@drawable/rightbtnshape"
+                android:textAllCaps="false"
+                android:fontFamily="@font/roboto_thin"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:id="@+id/cmdLogin"/>
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/newcarview"
+        android:layout_marginTop="-30dp">
+
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="30dp"
+            android:paddingTop="130dp"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:layout_gravity="center_vertical">
+
+            <Button
+                android:id="@+id/buttonToolbarFab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/signlogbuttons"
+                android:text="Make Inquiries" />
+            <Button
+                android:id="@+id/buttonCollapsingToolbarFab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/signlogbuttons"
+                android:text="Become a dealer"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonToolbarTabs"
+                android:fontFamily="@font/roboto_regular"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/signlogbuttons"
+                android:text="Find Tailors / Shops" />
+            <Button
+                android:id="@+id/buttonCollapsingToolbarTabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/signlogbuttons"
+                android:text="Visit Bootique " />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/colorGray"
+                android:outlineSpotShadowColor="@color/colorGray"/>
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="Terms of Service"
+                android:textColor="@color/colorGray"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:elevation="6dp"
+                android:layout_marginTop="10dp"
+                android:textAllCaps="false"
+                android:fontFamily="@font/roboto_thin"
+                android:padding="6dp"
+                android:id="@+id/cmdterms"/>
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="Policies"
+                android:textColor="@color/colorGray"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:elevation="6dp"
+                android:layout_marginTop="10dp"
+                android:textAllCaps="false"
+                android:fontFamily="@font/roboto_thin"
+                android:padding="6dp"
+                android:id="@+id/cmdpolicy"/>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
 </RelativeLayout>

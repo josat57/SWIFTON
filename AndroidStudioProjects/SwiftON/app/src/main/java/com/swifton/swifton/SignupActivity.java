@@ -16,6 +16,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.swifton.swifton.Helpers.AppSingleton;
+import com.swifton.swifton.Helpers.NetCheck;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,7 +35,7 @@ public class SignupActivity extends AppCompatActivity {
 
     protected String enteredUsername;
 
-    String URL= "http:192.168.43.53/swiftonbe/app/signup.php";
+    String URL= "http:10.11.32.26/swiftonbe/app/signup.php";
     private static final String TAG = "RegisterActivity";
 
     private static final String TAG_SUCCESS = "success";
@@ -77,17 +79,22 @@ public class SignupActivity extends AppCompatActivity {
                 final String password = txtSignupPassword.getText().toString().trim();
                 final String userdevice = deviceUDID.getText().toString().trim();
                 final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-
-                if (email.isEmpty() || password.isEmpty() || userdevice.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "All fields are required", Toast.LENGTH_LONG).show();
-                } else if (!email.matches(emailPattern)) {
-                    Toast.makeText(getApplicationContext(), "Invalid email address", Toast.LENGTH_SHORT).show();
-                } else if (email.matches(emailPattern) && password.length() >= 6) {
-                    signupUsers(email, password, userdevice);
-                    Toast.makeText(getApplicationContext(), "hello checking signup error "+ userdevice, Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Could not signup...", Toast.LENGTH_LONG).show();
+                if(NetCheck.isConnectedToInternet(getBaseContext())){
+                    if (email.isEmpty() || password.isEmpty() || userdevice.isEmpty()) {
+                        Toast.makeText(getApplicationContext(), "All fields are required", Toast.LENGTH_LONG).show();
+                    } else if (!email.matches(emailPattern)) {
+                        Toast.makeText(getApplicationContext(), "Invalid email address", Toast.LENGTH_SHORT).show();
+                    } else if (email.matches(emailPattern) && password.length() >= 6) {
+                        signupUsers(email, password, userdevice);
+                        Toast.makeText(getApplicationContext(), "hello checking signup error "+ userdevice, Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Could not signup...", Toast.LENGTH_LONG).show();
+                    }
+                }else{
+                    Toast.makeText(SignupActivity.this, "There is no internet connection!", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+
             }
         });
     }
