@@ -38,7 +38,8 @@
         <activity android:name=".ToolBars.ToolbarTabs" />
         <activity android:name=".UserDashboardActivity" />
         <activity android:name=".JustTest" />
-        <activity android:name=".BuyActivity"></activity>
+        <activity android:name=".BuyActivity" />
+        <activity android:name=".DesignersDashboardActivity"></activity>
     </application>
 
 </manifest>
