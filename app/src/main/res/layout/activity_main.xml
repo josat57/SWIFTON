@@ -70,7 +70,7 @@
                 android:layout_width="170dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:text="Signup"
+                android:text="@string/signup"
                 android:textSize="30sp"
                 android:textAlignment="center"
                 android:background="@drawable/leftbtnshape"
@@ -84,7 +84,8 @@
                 android:layout_width="170dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:text="Login"
+                android:layout_toEndOf="@+id/cmdSignup"
+                android:text="@string/login"
                 android:textSize="30sp"
                 android:textAlignment="center"
                 android:background="@drawable/rightbtnshape"
@@ -193,6 +194,36 @@
                 android:fontFamily="@font/roboto_thin"
                 android:padding="6dp"
                 android:id="@+id/cmdpolicy"/>
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="Sign up as Designer"
+                android:textColor="@color/colorGray"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:elevation="6dp"
+                android:layout_marginTop="10dp"
+                android:textAllCaps="false"
+                android:fontFamily="@font/roboto_thin"
+                android:padding="6dp"
+                android:id="@+id/designerSignup"/>
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="Sign in as Designer"
+                android:textColor="@color/colorGray"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:elevation="6dp"
+                android:layout_marginTop="10dp"
+                android:textAllCaps="false"
+                android:fontFamily="@font/roboto_thin"
+                android:padding="6dp"
+                android:id="@+id/designerLogin"/>
+
+
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
