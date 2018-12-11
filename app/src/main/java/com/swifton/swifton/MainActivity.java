@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.swifton.swifton.ToolBars.CollapsingToolbarFabs;
 import com.swifton.swifton.ToolBars.CollapsingToolbarTabs;
 import com.swifton.swifton.ToolBars.ToolbarAndFab;
@@ -18,6 +21,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button buttonToolbarFab = findViewById(R.id.buttonToolbarFab);
         Button buttonLogin = findViewById(R.id.cmdLogin);
         Button buttonSignup = findViewById(R.id.cmdSignup);
+        TextView signuptext = findViewById(R.id.designerSignup);
+        TextView signintext = findViewById(R.id.designerLogin);
+
+        signuptext.setOnClickListener(this);
+        signintext.setOnClickListener(this);
         buttonLogin.setOnClickListener(this);
         buttonSignup.setOnClickListener(this);
         buttonToolbarFab.setOnClickListener(this);
@@ -63,7 +71,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(signUpIntent);
                 overridePendingTransition(R.anim.righttranslate, R.anim.fade_out);
                 break;
+            case R.id.designerSignup:
 
+                break;
+
+            case R.id.designerLogin:
+                Intent designerIntent = new Intent(MainActivity.this, DesignersDashboardActivity.class);
+                startActivity(designerIntent);
+                overridePendingTransition(R.anim.lefttrslate, R.anim.righttranslate);
+                finish();
+                break;
+
+            default:
+                Toast.makeText(this, "Wonder Land User!", Toast.LENGTH_LONG).show();
+                break;
         }
 
     }
