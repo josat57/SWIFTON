@@ -32,8 +32,8 @@ public class LoginActivity extends AppCompatActivity {
 
     protected String enteredUsername;
 
-    String URL= "http:10.11.32.25/swiftonbe/app/login.php";
-    private static final String TAG = "RegisterActivity";
+    String URL= "http:192.168.43.53/swiftonbe/app/login.php";
+    private static final String TAG = "LoginActivity";
 
     private static final String TAG_SUCCESS = "success";
 
@@ -76,8 +76,6 @@ public class LoginActivity extends AppCompatActivity {
                 }else {
                     Toast.makeText(LoginActivity.this, "There is no internet connection", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
 
@@ -105,22 +103,24 @@ public class LoginActivity extends AppCompatActivity {
                 hideDialog();
                 try {
                     JSONObject jObj = new JSONObject(response);
-                    Integer error = jObj.getInt("error");
+                    Integer error = jObj.getInt("statuscode");
 
                     if (error == 1) {
-                        //String user = jObj.getJSONObject("response").getString("email");
-                        String user = jObj.getString("email");
+                        //String user = jObj.getJSONObject("data").getString(("email"));
+                        String user = jObj.getString("data".toString());
                         // Launch User activity
                         Intent homeIntent = new Intent(getApplicationContext(), UserDashboardActivity.class);
-                        //homeIntent.putExtra("USERNAME", enteredUsername);
-                        //homeIntent.putExtra("MESSAGE", "Login Successful!");
+                        homeIntent.putExtra("USERNAME", enteredUsername);
+                        homeIntent.putExtra("MESSAGE", "Login Successful!");
                         startActivity(homeIntent);
                         overridePendingTransition(R.anim.righttranslate, R.anim.lefttrslate);
-                        //homeIntent.putExtra("email", user);
+                        homeIntent.putExtra("email", user);
+                        String errorMsg = jObj.getString("status");
+                        Toast.makeText(getApplicationContext(), "Login " + errorMsg, Toast.LENGTH_LONG).show();
                         finish();
                     } else {
 
-                        String errorMsg = jObj.getString("error");
+                        String errorMsg = jObj.getString("status");
                         Toast.makeText(getApplicationContext(), "Unable to login at this time " + errorMsg, Toast.LENGTH_LONG).show();
                     }
                 } catch (final Exception e) {
