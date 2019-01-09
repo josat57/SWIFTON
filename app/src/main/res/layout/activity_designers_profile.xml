@@ -11,24 +11,39 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorMaroonDark">
+            android:background="@color/colorPrimaryDark">
 
             <ImageView
                 android:id="@+id/comprofileLogo"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:src="@drawable/ic_microphone_black_48dp"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/round_corners"
-                android:tint="@color/colorGray" />
+                android:background="@drawable/circleimage"
+                android:tint="@color/colorWhite"
+                android:scaleType="fitCenter"
+                android:scaleX="1"
+                android:scaleY="1"/>
+            <ImageView
+                android:id="@+id/editcomplogobtn"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_margin="16dp"
+                android:scaleType="centerCrop"
+                android:scaleY="1"
+                android:scaleX="1"
+                android:src="@drawable/ic_edit"
+                android:background="@color/colorGray"
+                android:layout_alignBottom="@+id/comprofileLogo"
+                android:layout_toEndOf="@+id/comprofileLogo"/>
 
         </RelativeLayout>
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDarkFaid">
+            android:background="@color/colorPrimaryLight">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

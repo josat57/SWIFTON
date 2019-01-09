@@ -45,8 +45,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     protected String enteredUsername;
 
-    String LoginURL= "http:192.168.43.53/swiftonbe/app/login_designers.php";
-    String SignupURL = "http:192.168.43.53/swiftonbe/app/create_designers.php";
+   // String LoginURL= "http:10.11.32.28/swiftonbe/app/login_designers.php";
+//    String SignupURL = "http:192.168.43.53/swiftonbe/app/create_designers.php";
+
+    //Live testing server url
+    String LoginURL = "https://swiftontest.000webhostapp.com/swiftonbe/app/login_designers.php";
+    String SignupURL = "https://swiftontest.000webhostapp.com/swiftonbe/app/create_designers.php";
+
     private static final String TAG = "Requesting...";
 
     private static final String TAG_SUCCESS = "success";
@@ -190,6 +195,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 Toast.makeText(getApplicationContext(), "Invalid email address", Toast.LENGTH_SHORT).show();
                             } else if (email.matches(emailPattern) && paswrd.length() >= 6) {
                                 loginUser(email, paswrd);
+                                Toast.makeText(getApplicationContext(), "Done!", Toast.LENGTH_LONG).show();
                             } else {
                                 Toast.makeText(getApplicationContext(), "Could not login...", Toast.LENGTH_LONG).show();
                             }
@@ -226,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     if (error == 1) {
                         //String user = jObj.getJSONObject("data").getString(("email"));
-                        String user = jObj.getString("data".toString());
+                        String user = jObj.getString("data");
                         // Launch User activity
                         Intent homeIntent = new Intent(getApplicationContext(), DesignersDashboardActivity.class);
                         homeIntent.putExtra("USERNAME", enteredUsername);
@@ -273,7 +279,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Adding request to request queue
         AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(strReq,cancel_req_tag);
     }
-
     private void signupUsers(final String email, final String password, final String userdevice) {
         //Tag used to cancel the request
         String cancel_req_tag = "Designer Registration";

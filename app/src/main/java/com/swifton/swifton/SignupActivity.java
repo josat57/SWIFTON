@@ -35,7 +35,11 @@ public class SignupActivity extends AppCompatActivity {
 
     protected String enteredUsername;
 
-    String URL= "http:192.168.43.53/swiftonbe/app/signup.php";
+    //String URL= "http:192.168.43.53/swiftonbe/app/signup.php";
+
+    //Live testing server url
+    String URL = "https://swiftontest.000webhostapp.com/swiftonbe/app/signup.php";
+
     private static final String TAG = "RegisterActivity";
 
     private static final String TAG_SUCCESS = "success";
@@ -92,7 +96,6 @@ public class SignupActivity extends AppCompatActivity {
                     }
                 }else{
                     Toast.makeText(SignupActivity.this, "There is no internet connection!", Toast.LENGTH_SHORT).show();
-                    return;
                 }
 
             }
