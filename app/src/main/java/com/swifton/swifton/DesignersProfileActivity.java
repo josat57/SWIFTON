@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -136,18 +137,24 @@ public class DesignersProfileActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null){
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
             Uri selectedImageUri = data.getData();
+
+            try {
                 if (null != selectedImageUri) {
                     // Get the path from the Uri
                     Toast.makeText(this, "image is gotten!", Toast.LENGTH_SHORT).show();
                     String path =  getPath(this,selectedImageUri);
                     Log.i(TAG, "Image Path : " + path);
-                    companyLogo.setImageURI(selectedImageUri);
+                    //companyLogo.setImageURI(selectedImageUri);
                     // Set the image in ImageView
-                    //Bitmap bitmap = BitmapFactory.decodeFile(path);
-                    //companyLogo.setImageBitmap(bitmap);
+                    Bitmap bitmap = BitmapFactory.decodeFile(path);
+                    companyLogo.setImageBitmap(bitmap);
                 }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+
         }
     }
 
