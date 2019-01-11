@@ -16,19 +16,15 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.swifton.swifton.Adpaters.DesignerprofileAdapter;
 import com.swifton.swifton.DesignersProfileActivity;
-import com.swifton.swifton.Models.DesignersProfile;
 import com.swifton.swifton.R;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 
@@ -43,8 +39,6 @@ public class DesignerProfileFragment extends Fragment {
     DesignerprofileAdapter adapter;
     RequestQueue req;
 
-    List<DesignersProfile> mdesignersProfile;
-
     String DesignersURL = "http:192.168.43.53/swiftonbe/app/get_designers.php";
 
     public DesignerProfileFragment() {
@@ -56,10 +50,6 @@ public class DesignerProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_designer_profile, container, false);
-
-        mdesignersProfile = new ArrayList<>();
-
-        req = new Volley().newRequestQueue(getActivity());
 
         editFab = view.findViewById(R.id.editProfileFAB);
         id = view.findViewById(R.id.dsnid);
@@ -93,67 +83,55 @@ public class DesignerProfileFragment extends Fragment {
     //Load the Top DesignersProfileHolder data
     private void loadTopDesigners(){
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, DesignersURL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONArray jsonArray = new JSONArray(response);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, DesignersURL, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject designerObject) {
+                try {
+                        //get Jsonobjects
 
-                            for(int i =0; i<= jsonArray.length(); i++){
-                                JSONObject designerObject = jsonArray.getJSONObject(i);
-                                //get Jsonobjects
+                        int mid = designerObject.getJSONObject("data").getInt("id");
+                        String musername = designerObject.getJSONObject("data").getString("username");
+                        String mdesignerid = designerObject.getJSONObject("data").getString("designerid");
+                        String mfirstname = designerObject.getJSONObject("data").getString("firstname");
+                        String mlastname = designerObject.getJSONObject("data").getString("lastname");
+                        String memail = designerObject.getJSONObject("data").getString("email");
+                        String mpassword = designerObject.getJSONObject("data").getString("dpassword");
+                        String maddress = designerObject.getJSONObject("data").getString("daddress");
+                        String mphoneno  = designerObject.getJSONObject("data").getString("phoneno");
+                        String mdposition = designerObject.getJSONObject("data").getString("dposition");
+                        String mdeviceids = designerObject.getJSONObject("data").getString("deviceids");
+                        String mcreated_at = designerObject.getJSONObject("data").getString("created_at");
+                        String mupdated_at = designerObject.getJSONObject("data").getString("updated_at");
+                        Toast.makeText(getActivity(), "Hey "+ musername, Toast.LENGTH_LONG).show();
+//                                DesignersProfile designersProfile =  new DesignersProfile(mid, musername, mdesignerid, mfirstname, mlastname, memail, mpassword, maddress, mphoneno, mdposition, mdeviceids, mcreated_at, mupdated_at);
+//                                mdesignersProfile.add(designersProfile);
 
-                                int mid = designerObject.getJSONObject("data").getInt("id");
-                                String musername = designerObject.getJSONObject("data").getString("username");
-                                String mdesignerid = designerObject.getJSONObject("data").getString("designerid");
-                                String mfirstname = designerObject.getJSONObject("data").getString("firstname");
-                                String mlastname = designerObject.getJSONObject("data").getString("lastname");
-                                String memail = designerObject.getJSONObject("data").getString("email");
-                                String mpassword = designerObject.getJSONObject("data").getString("dpassword");
-                                String maddress = designerObject.getJSONObject("data").getString("daddress");
-                                String mphoneno  = designerObject.getJSONObject("data").getString("phoneno");
-                                String mdposition = designerObject.getJSONObject("data").getString("dposition");
-                                String mdeviceids = designerObject.getJSONObject("data").getString("deviceids");
-                                String mcreated_at = designerObject.getJSONObject("data").getString("created_at");
-                                String mupdated_at = designerObject.getJSONObject("data").getString("updated_at");
-                                Toast.makeText(getActivity(), "Hey "+ musername, Toast.LENGTH_LONG).show();
-                                DesignersProfile designersProfile =  new DesignersProfile(mid, musername, mdesignerid, mfirstname, mlastname, memail, mpassword, maddress, mphoneno, mdposition, mdeviceids, mcreated_at, mupdated_at);
-                                mdesignersProfile.add(designersProfile);
+                        id.setText(mid);
+                        username.setText(musername);
+                        password.setText(mpassword);
+                        firstname.setText(mfirstname);
+                        lastname.setText(mlastname);
+                        email.setText(memail);
+                        designerid.setText(mdesignerid);
+                        address.setText(maddress);
+                        phone.setText(mphoneno);
+                        position.setText(mdposition);
+                        deviceids.setText(mdeviceids);
+                        created_at.setText(mcreated_at);
+                        updated_at.setText(mupdated_at);
 
-                                id.setText(mid);
-                                username.setText(musername);
-                                password.setText(mpassword);
-                                firstname.setText(mfirstname);
-                                lastname.setText(mlastname);
-                                email.setText(memail);
-                                designerid.setText(mdesignerid);
-                                address.setText(maddress);
-                                phone.setText(mphoneno);
-                                position.setText(mdposition);
-                                deviceids.setText(mdeviceids);
-                                created_at.setText(mcreated_at);
-                                updated_at.setText(mupdated_at);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
 
-                            }
-
-
-                            adapter = new DesignerprofileAdapter(mdesignersProfile, getActivity());
-                            recyclerView.setAdapter(adapter);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
-
-        Volley.newRequestQueue(getActivity()).add(stringRequest);
+        Volley.newRequestQueue(getActivity()).add(jsonObjectRequest);
     }
 
 }
