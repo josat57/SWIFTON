@@ -36,4 +36,11 @@
     <string name="my_design_collection">My Design Collection</string>
     <string name="dashboard">Dashboard</string>
     <string name="my_dealers">My Dealers</string>
+    <string name="firstname">Firstname</string>
+    <string name="lastname">Lastname</string>
+    <string name="phone">Phone</string>
+    <string name="address">Address</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="country">Country</string>
 </resources>

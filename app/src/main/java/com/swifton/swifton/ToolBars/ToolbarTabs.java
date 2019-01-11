@@ -33,9 +33,9 @@ public class ToolbarTabs extends AppCompatActivity {
 //        });
         ViewPager mViewPager = findViewById(R.id.viewpagerDesigners);
         ViewPagerAdapter mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        mViewPagerAdapter.addFragment(DesignersFragment.newInstance(), "Latest Designers");
-        mViewPagerAdapter.addFragment(TopDesignersFragment.newInstance(), "Top Designers");
-        mViewPagerAdapter.addFragment(MyOrdersFragment.newInstance(), "Brand Designers");
+        mViewPagerAdapter.addFragment(DesignersFragment.newInstance(), "Latest DesignersProfileHolder");
+        mViewPagerAdapter.addFragment(TopDesignersFragment.newInstance(), "Top DesignersProfileHolder");
+        mViewPagerAdapter.addFragment(MyOrdersFragment.newInstance(), "Brand DesignersProfileHolder");
         mViewPager.setAdapter(mViewPagerAdapter);
         TabLayout mTabLayout = findViewById(R.id.tabsdesigners);
         mTabLayout.setupWithViewPager(mViewPager);

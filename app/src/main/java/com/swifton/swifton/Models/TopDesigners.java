@@ -3,7 +3,7 @@ package com.swifton.swifton.Models;
 public class TopDesigners {
     private Integer id, approvalstatus, level, zipcode;
     private String companyname, companyregno, companyaddress, country,
-    companystate, companycity,emailaddress, phone, website, companycode, verified, created_at, logo;
+    companystate, companycity,emailaddress, phone, website, companycode, verified, created_at, updated_at, logo;
 
     public TopDesigners() {
     }
@@ -142,5 +142,13 @@ public class TopDesigners {
 
     public void setCreated_at(String created_at) {
         this.created_at = created_at;
+    }
+
+    public  String getUpdated_at(){
+        return updated_at;
+    }
+
+    public void setUpdated_at(){
+        this.updated_at = updated_at;
     }
 }

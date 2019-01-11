@@ -9,6 +9,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -17,6 +24,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +42,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,19 +50,20 @@ import static com.swifton.swifton.Helpers.ImageFilePath.getPath;
 
 public class DesignersProfileActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST =1;
+    public static final String UPLOAD_KEY = "image";
     private Uri filepath;
     EditText companyname, companyregno, companyaddress, country, companystate, companycity, emailaddress, companyphone, website, companyzipcode;
     Button cmdDone;
-    ImageView companyLogo, editcompLogo;
+    ImageView companyLogo;
 
     ProgressDialog progressDialog;
 
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 2;
 
-    //String URL= "http:192.168.43.53/swiftonbe/app/create_company.php";
+    String URL= "http:192.168.43.53/swiftonbe/app/create_company.php";
 
     //Live testing server url
-    String URL = "https://swiftontest.000webhostapp.com/swiftonbe/app/create_company.php";
+    //String URL = "https://swiftontest.000webhostapp.com/swiftonbe/app/create_company.php";
 
     private static final String TAG = "RegisterActivity";
 
@@ -82,7 +92,6 @@ public class DesignersProfileActivity extends AppCompatActivity {
         country = findViewById(R.id.editcomcountry);
         website = findViewById(R.id.editcomwebsite);
         companyLogo = findViewById(R.id.comprofileLogo);
-        editcompLogo = findViewById(R.id.editcomplogobtn);
         cmdDone = findViewById(R.id.editprofileBTN);
 
 
@@ -101,6 +110,7 @@ public class DesignersProfileActivity extends AppCompatActivity {
                 final String compcountry = country.getText().toString().trim();
                 final String compwebsite = website.getText().toString().trim();
                 final Bitmap complogo  = ((BitmapDrawable)companyLogo.getDrawable()).getBitmap();
+                final String encodedLogo = getStringImage(complogo);
 
                 if(compname.isEmpty() || compemail.isEmpty() || compphone.isEmpty() || compaddress.isEmpty() || !compemail.matches(emailPattern)){
                     Toast.makeText(getApplicationContext(), "Please make sure you enter all fields correctly!", Toast.LENGTH_LONG).show();
@@ -109,7 +119,7 @@ public class DesignersProfileActivity extends AppCompatActivity {
                     //Call the profile creation method
                     createCompanyProfile(compname, compregno, compemail, compphone,
                             comopzip, compaddress, compcity, compstate,
-                            compcountry, compwebsite, complogo);
+                            compcountry, compwebsite, encodedLogo);
                     Toast.makeText(getApplicationContext(), "Done!", Toast.LENGTH_LONG).show();
                 }else{
                     Toast.makeText(getApplicationContext(), "Cannot create the company profile at the moment", Toast.LENGTH_LONG).show();
@@ -117,7 +127,7 @@ public class DesignersProfileActivity extends AppCompatActivity {
             }
         });
 
-        editcompLogo.setOnClickListener(new View.OnClickListener(){
+        companyLogo.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 if(checkPermissionREAD_EXTERNAL_STORAGE(DesignersProfileActivity.this)) {
@@ -149,7 +159,10 @@ public class DesignersProfileActivity extends AppCompatActivity {
                     //companyLogo.setImageURI(selectedImageUri);
                     // Set the image in ImageView
                     Bitmap bitmap = BitmapFactory.decodeFile(path);
-                    companyLogo.setImageBitmap(bitmap);
+                    Bitmap conv_bm = getRoundedBitmap(bitmap, 0);
+                    companyLogo.setImageBitmap(conv_bm);
+
+
                 }
             }catch(Exception e){
                 e.printStackTrace();
@@ -158,8 +171,7 @@ public class DesignersProfileActivity extends AppCompatActivity {
         }
     }
 
-    public boolean checkPermissionREAD_EXTERNAL_STORAGE(
-            final Context context) {
+    public boolean checkPermissionREAD_EXTERNAL_STORAGE(final Context context) {
         int currentAPIVersion = Build.VERSION.SDK_INT;
         if (currentAPIVersion >= android.os.Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(context,
@@ -187,9 +199,29 @@ public class DesignersProfileActivity extends AppCompatActivity {
         }
     }
 
+    public static Bitmap getRoundedBitmap(Bitmap bitmap, int rpx) {
+        final Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        final Canvas canvas = new Canvas(output);
 
-    public void showDialog(final String msg, final Context context,
-                           final String permission) {
+        final int color = Color.RED;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        final RectF rectF = new RectF(rect);
+        final int px = rpx;
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawOval(rectF, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, px, px, paint);
+
+        bitmap.recycle();
+
+        return output;
+    }
+
+    public void showDialog(final String msg, final Context context, final String permission) {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
         alertBuilder.setCancelable(true);
         alertBuilder.setTitle("Permission necessary");
@@ -209,8 +241,7 @@ public class DesignersProfileActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -228,11 +259,12 @@ public class DesignersProfileActivity extends AppCompatActivity {
 
     private void createCompanyProfile(final String compname, final String compregno, final String compemail, final String compphone,
                               final String comopzip, final String compaddress, final String compcity, final String compstate,
-                              final String compcountry, final String compwebsite, final Bitmap complogo) {
+                              final String compcountry, final String compwebsite, final String encodedlogo) {
         //Tag used to cancel the request
         String cancel_req_tag = "signup";
-        progressDialog.setMessage("Registering you...");
+        progressDialog.setMessage("Creating Profile now!...");
         showDialog();
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -293,7 +325,7 @@ public class DesignersProfileActivity extends AppCompatActivity {
                 params.put("compstate", compstate);
                 params.put("compcountry", compcountry);
                 params.put("compwebsite", compwebsite);
-                params.put("complogo", String.valueOf(complogo));
+                params.put("complogo", encodedlogo);
                 return params;
             }
         };
@@ -305,9 +337,18 @@ public class DesignersProfileActivity extends AppCompatActivity {
         if (!progressDialog.isShowing())
             progressDialog.show();
     }
+
     private void hideDialog() {
         if (progressDialog.isShowing())
             progressDialog.dismiss();
+    }
+
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
     }
 
 }

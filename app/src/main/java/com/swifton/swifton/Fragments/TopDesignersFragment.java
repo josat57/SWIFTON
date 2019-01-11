@@ -10,11 +10,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.swifton.swifton.Adpaters.TopDesignersAdapter;
 import com.swifton.swifton.Helpers.Space;
+import com.swifton.swifton.Models.DesignersProfile;
 import com.swifton.swifton.Models.TopDesigners;
 import com.swifton.swifton.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -28,6 +39,12 @@ public class TopDesignersFragment extends Fragment {
 
     TopDesignersAdapter topDesignersAdapter;
     ArrayList<TopDesigners> topdesigners_list;
+
+    //Local testing server url
+    String TopDesignersURL = "http:192.168.43.53/swiftonbe/app/get_designers.php";
+
+    //Live testing server url
+    //String TopDesignersURL = "https://swiftontest.000webhostapp.com/swiftonbe/app/get_designers.php";
 
     public static TopDesignersFragment newInstance() {
         TopDesignersFragment fragment = new TopDesignersFragment();
@@ -158,5 +175,51 @@ public class TopDesignersFragment extends Fragment {
         topdesigners.add(tds);
 
         return topdesigners;
+    }
+
+    //Load the Top DesignersProfileHolder data
+    private void loadTopDesigners(){
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, TopDesignersURL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray jsonArray = new JSONArray(response);
+
+                            for(int i =0; i<= jsonArray.length(); i++){
+                                JSONObject designerObject = jsonArray.getJSONObject(i);
+                                //get Jsonobjects
+
+                                int id = designerObject.getJSONObject("data").getInt("id");
+                                String username = designerObject.getJSONObject("data").getString("username");
+                                String designerid = designerObject.getJSONObject("data").getString("designerid");
+                                String firstname = designerObject.getJSONObject("data").getString("firstname");
+                                String lastname = designerObject.getJSONObject("data").getString("lastname");
+                                String email = designerObject.getJSONObject("data").getString("email");
+                                String password = designerObject.getJSONObject("data").getString("dpassword");
+                                String address = designerObject.getJSONObject("data").getString("daddress");
+                                String phoneno  = designerObject.getJSONObject("data").getString("phoneno");
+                                String dposition = designerObject.getJSONObject("data").getString("dposition");
+                                String deviceids = designerObject.getJSONObject("data").getString("deviceids");
+                                String created_at = designerObject.getJSONObject("data").getString("created_at");
+                                String updated_at = designerObject.getJSONObject("data").getString("updated_at");
+
+                                DesignersProfile designersProfile =  new DesignersProfile(id, username, designerid, firstname, lastname, email, password, address, phoneno, dposition, deviceids, created_at, updated_at);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        Volley.newRequestQueue(getActivity()).add(stringRequest);
     }
 }

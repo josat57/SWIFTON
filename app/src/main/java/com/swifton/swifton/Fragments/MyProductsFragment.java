@@ -70,7 +70,7 @@ public class MyProductsFragment extends Fragment {
 
     String[] productType = {"Native","Babriga","Blouse","Native","Native","Jumper","Dorn","Branded Cotton","Satin Roller","Native","Sweat Shirt",};
 
-    String[] designers = {"Pablo Fine Denims", "Sophia DFashionista", "TopNotch Designers", "Blazer Court", "Denim and Lace", "Prazy Deals", "Ziped Satin", "ladies and Gents", "Fashion Bright", "Rails On Designs", "Plural Match"};
+    String[] designers = {"Pablo Fine Denims", "Sophia DFashionista", "TopNotch DesignersProfileHolder", "Blazer Court", "Denim and Lace", "Prazy Deals", "Ziped Satin", "ladies and Gents", "Fashion Bright", "Rails On Designs", "Plural Match"};
     String[] sizes = {"44", "39","40","42","36","48","46","44","41","38","40"};
     String[] colors = {"Pink", "Crimson", "Navy Blue", "Black", "Gray", "Purple", "White", "Olive Greeb", "Royal Purple and White", "Golden Yellow", "Sea Blue"};
     String[] views = {"1000","5000", "100", "10000", "100000", "50", "300", "450", "700", "2000", "4000"};

@@ -3,16 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorPrimaryDark"
-    tools:context="com.swifton.swifton.Fragments.DesignerProfileFragment">
+    android:orientation="vertical"
+    tools:context=".Fragments.CompanyProfileFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#6ef4f3f5">
-
 
         <ImageView
             android:id="@+id/profileLogo"
@@ -22,8 +20,23 @@
             android:layout_centerInParent="true"
             android:layout_marginTop="20dp"
             android:background="@drawable/circleimage"/>
-
-
+        <ImageView
+            android:id="@+id/verified"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|start"
+            android:src="@drawable/ic_star"
+            android:tint="@color/colorGray"
+            android:layout_margin="16dp"/>
+        <TextView
+            android:id="@+id/comlevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:padding="10dp"
+            android:hint="Premium"
+            android:layout_below="@+id/profileLogo"/>
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/editProfileFAB"
             android:layout_width="wrap_content"
@@ -38,7 +51,7 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite">
+        android:background="@color/colorPrimaryDarkFaid">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,74 +60,91 @@
             android:padding="20dp">
 
             <TextView
-                android:id="@+id/dsnusername"
+                android:id="@+id/comusername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:padding="5dp"
-                android:hint="username"
-                android:textColor="@color/colorBlack"
-                android:textColorHint="@color/colorBlack"/>
+                android:hint="username"/>
 
             <TextView
-                android:id="@+id/dsnfirstname"
+                android:id="@+id/comname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:padding="5dp"
-                android:hint="@string/firstname"
-                android:textColor="@color/colorBlack"
-                android:textColorHint="@color/colorBlack"/>
+                android:hint="company name"/>
 
             <TextView
-                android:id="@+id/dsnlastname"
+                android:id="@+id/comregno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:padding="5dp"
-                android:hint="@string/lastname"
-                android:textColor="@color/colorBlack"
-                android:textColorHint="@color/colorBlack"/>
+                android:hint="Registration Number"/>
 
             <TextView
-                android:id="@+id/dsnemail"
+                android:id="@+id/comemail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:padding="5dp"
-                android:hint="@string/email"
-                android:textColor="@color/colorBlack"
-                android:textColorHint="@color/colorBlack"/>
+                android:hint="Email"/>
 
             <TextView
-                android:id="@+id/dsnphone"
+                android:id="@+id/comphone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:padding="5dp"
-                android:hint="@string/phone"
-                android:textColor="@color/colorBlack"
-                android:textColorHint="@color/colorBlack"/>
+                android:hint="Phone"/>
 
             <TextView
-                android:id="@+id/dsnaddress"
+                android:id="@+id/comzipcode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:padding="5dp"
-                android:hint="@string/address"
-                android:textColor="@color/colorBlack"
-                android:textColorHint="@color/colorBlack"/>
+                android:hint="Zipcode"/>
 
             <TextView
-                android:id="@+id/dsnposition"
+                android:id="@+id/comaddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:padding="5dp"
-                android:hint="Position"
-                android:textColor="@color/colorBlack"
-                android:textColorHint="@color/colorBlack"/>
+                android:hint="Address"/>
+
+            <TextView
+                android:id="@+id/comcity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:hint="City"/>
+
+            <TextView
+                android:id="@+id/comstate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:hint="State"/>
+            <TextView
+                android:id="@+id/comcountry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:hint="Country"/>
+
+            <TextView
+                android:id="@+id/comwebsite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:hint="Website"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -122,69 +152,29 @@
                 android:layout_marginTop="10dp">
 
                 <TextView
-                    android:id="@+id/dsnid"
+                    android:id="@+id/comid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="id"
                     android:layout_margin="5dp"
-                    android:padding="5dp"
-                    android:textColor="@color/colorBlack"
-                    android:textColorHint="@color/colorBlack"/>
-
+                    android:padding="5dp"/>
                 <TextView
-                    android:id="@+id/dsndeviceid"
+                    android:id="@+id/comcode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Device ID"
+                    android:hint="Company Code"
                     android:layout_margin="5dp"
                     android:padding="5dp"
-                    android:textColor="@color/colorBlack"
-                    android:textColorHint="@color/colorBlack"
-                    android:layout_toEndOf="@id/dsnid"/>
+                    android:layout_centerHorizontal="true"/>
 
                 <TextView
-                    android:id="@+id/designerID"
+                    android:id="@+id/comstatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Designer ID"
-                    android:layout_margin="5dp"
-                    android:padding="5dp"
-                    android:layout_centerHorizontal="true"
-                    android:textColor="@color/colorBlack"
-                    android:textColorHint="@color/colorBlack"/>
-
-                <TextView
-                    android:id="@+id/dsncreated"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="Created Date"
+                    android:hint="Status"
                     android:layout_alignParentEnd="true"
                     android:layout_margin="5dp"
-                    android:padding="5dp"
-                    android:textColor="@color/colorBlack"
-                    android:textColorHint="@color/colorBlack"/>
-
-                <TextView
-                    android:id="@+id/dsnpassword"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/password"
-                    android:layout_alignParentEnd="true"
-                    android:layout_margin="5dp"
-                    android:padding="5dp"
-                    android:textColor="@color/colorBlack"
-                    android:textColorHint="@color/colorBlack"/>
-
-                <TextView
-                    android:id="@+id/dsnupdated"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="Last updated"
-                    android:layout_alignParentEnd="true"
-                    android:layout_margin="5dp"
-                    android:padding="5dp"
-                    android:textColor="@color/colorBlack"
-                    android:textColorHint="@color/colorBlack"/>
+                    android:padding="5dp"/>
             </RelativeLayout>
 
 

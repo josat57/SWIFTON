@@ -4,7 +4,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-    android:background="@color/colorBlack"
+    android:background="?attr/colorPrimaryDark"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context="com.swifton.swifton.DesignersProfileActivity">
 
@@ -12,15 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:background="@color/colorPrimaryDark">
-
-            <android.support.v7.widget.CardView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                app:cardCornerRadius="90dp"
-                android:id="@+id/logocont"
-                android:layout_margin="20dp"
-                android:layout_centerHorizontal="true">
+            android:background="#6ef4f3f5">
 
                 <ImageView
                     android:id="@+id/comprofileLogo"
@@ -29,31 +21,19 @@
                     android:src="@drawable/ic_microphone_black_48dp"
                     android:layout_centerInParent="true"
                     android:background="@drawable/circleimage"
-                    android:scaleType="center"
+                    android:scaleType="fitCenter"
                     android:scaleX="1"
                     android:scaleY="1"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginVertical="10dp"/>
-            </android.support.v7.widget.CardView>
-
-            <ImageView
-                android:id="@+id/editcomplogobtn"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:scaleType="centerCrop"
-                android:scaleY="1"
-                android:scaleX="1"
-                android:src="@drawable/ic_edit"
-                android:elevation="10dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginBottom="50dp"/>
+                    android:layout_gravity="center_horizontal|center"
+                    android:adjustViewBounds="true"
+                    android:layout_margin="20dp"/>
 
         </RelativeLayout>
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryLight">
+            android:background="@color/colorWhite">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -68,6 +48,7 @@
                     android:hint="Company Name"
                     app:passwordToggleDrawable="@drawable/ic_key"
                     app:passwordToggleEnabled="true"
+                    android:textColorHint="@color/colorBlack"
                     android:layout_marginTop="10dp">
 
                     <EditText
@@ -86,6 +67,7 @@
                     android:hint="Registration Number"
                     app:passwordToggleEnabled="true"
                     app:passwordToggleDrawable="@drawable/ic_key"
+                    android:textColorHint="@color/colorBlack"
                     android:layout_marginTop="10dp">
 
                     <EditText
@@ -104,6 +86,7 @@
                     android:hint="Company Email"
                     app:passwordToggleDrawable="@drawable/ic_key"
                     app:passwordToggleEnabled="true"
+                    android:textColorHint="@color/colorBlack"
                     android:layout_marginTop="10dp">
 
                     <EditText
@@ -112,6 +95,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:padding="5dp"
+                        android:textColor="@color/colorBlack"
                         android:inputType="textEmailAddress"/>
 
                 </android.support.design.widget.TextInputLayout>
@@ -122,6 +106,7 @@
                     android:hint="Company Phone"
                     app:passwordToggleDrawable="@drawable/ic_key"
                     app:passwordToggleEnabled="true"
+                    android:textColorHint="@color/colorBlack"
                     android:layout_marginTop="10dp">
 
                     <EditText
@@ -140,6 +125,7 @@
                     android:hint="Company Zipcode"
                     app:passwordToggleDrawable="@drawable/ic_key"
                     app:passwordToggleEnabled="true"
+                    android:textColorHint="@color/colorBlack"
                     android:layout_marginTop="10dp">
 
                     <EditText
@@ -157,6 +143,7 @@
                     android:hint="Company Address"
                     app:passwordToggleDrawable="@drawable/ic_key"
                     app:passwordToggleEnabled="true"
+                    android:textColorHint="@color/colorBlack"
                     android:layout_marginTop="10dp">
 
                     <EditText
@@ -174,6 +161,7 @@
                     android:hint="City"
                     app:passwordToggleDrawable="@drawable/ic_key"
                     app:passwordToggleEnabled="true"
+                    android:textColorHint="@color/colorBlack"
                     android:layout_marginTop="10dp">
 
                     <EditText
@@ -191,6 +179,7 @@
                     android:hint="State"
                     app:passwordToggleDrawable="@drawable/ic_key"
                     app:passwordToggleEnabled="true"
+                    android:textColorHint="@color/colorBlack"
                     android:layout_marginTop="10dp">
 
                     <EditText
@@ -208,6 +197,7 @@
                     android:hint="Country"
                     app:passwordToggleDrawable="@drawable/ic_key"
                     app:passwordToggleEnabled="true"
+                    android:textColorHint="@color/colorBlack"
                     android:layout_marginTop="10dp">
 
                     <EditText
@@ -225,6 +215,7 @@
                     android:hint="Company Website"
                     app:passwordToggleDrawable="@drawable/ic_key"
                     app:passwordToggleEnabled="true"
+                    android:textColorHint="@color/colorBlack"
                     android:layout_marginTop="10dp">
 
                     <EditText

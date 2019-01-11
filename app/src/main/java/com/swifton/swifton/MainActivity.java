@@ -45,12 +45,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     protected String enteredUsername;
 
-   // String LoginURL= "http:10.11.32.28/swiftonbe/app/login_designers.php";
-//    String SignupURL = "http:192.168.43.53/swiftonbe/app/create_designers.php";
+    //Local testing server url
+    String LoginURL = "http:192.168.43.53/swiftonbe/app/login_designers.php";
+    String SignupURL = "http:192.168.43.53/swiftonbe/app/create_designers.php";
 
     //Live testing server url
-    String LoginURL = "https://swiftontest.000webhostapp.com/swiftonbe/app/login_designers.php";
-    String SignupURL = "https://swiftontest.000webhostapp.com/swiftonbe/app/create_designers.php";
+    //String LoginURL = "https://swiftontest.000webhostapp.com/swiftonbe/app/login_designers.php";
+//    String SignupURL = "https://swiftontest.000webhostapp.com/swiftonbe/app/create_designers.php";
 
     private static final String TAG = "Requesting...";
 
