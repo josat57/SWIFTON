@@ -12,13 +12,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.swifton.swifton.Fragments.AddDesignsFragment;
+import com.swifton.swifton.Fragments.CompanyProfileFragment;
 import com.swifton.swifton.Fragments.CustomerOrdersFragment;
 import com.swifton.swifton.Fragments.CustomersFragment;
 import com.swifton.swifton.Fragments.DashboardFragment;
 import com.swifton.swifton.Fragments.DeliveredFragment;
-import com.swifton.swifton.Fragments.DesignerProfileFragment;
 import com.swifton.swifton.Fragments.MyProductsFragment;
 import com.swifton.swifton.Fragments.PendingFragment;
 
@@ -28,6 +30,13 @@ public class DesignersDashboardActivity extends AppCompatActivity implements Nav
     private ActionBarDrawerToggle mdrawertoggle;
     private Toolbar mtoolbar;
     private String mActivityTitle;
+
+
+
+    TextView navid, navusername, navemail, navdesignerid;
+    ImageView navprofilepic;
+    //Designer details local testing server
+    String DesignersURL = "http:192.168.42.27/swiftonbe/app/get_designers.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,23 +49,43 @@ public class DesignersDashboardActivity extends AppCompatActivity implements Nav
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_home);
+        //getSupportActionBar().setIcon(R.drawable.ic_home);
 
         mdrawaerLayout = findViewById(R.id.dDrawerLayout);
 //        mdrawertoggle = new ActionBarDrawerToggle(this,mdrawaerLayout,R.string.open,R.string.close);
 //        mdrawaerLayout.addDrawerListener(mdrawertoggle);
 //        mdrawertoggle.syncState();
 
-        mActivityTitle = "Fashionister";
+        mActivityTitle = "Dashboard";
 
         NavigationView navigationView =  findViewById(R.id.dNavView);
         navigationView.setNavigationItemSelectedListener(this);
-
+        View headerView = navigationView.getHeaderView(0);
         setupDrawer();
 
         DashboardFragment dashboardFragment = new DashboardFragment();
         FragmentManager dashboardmanager = getSupportFragmentManager();
         dashboardmanager.beginTransaction().replace(R.id.linearLayout_for_fragment, dashboardFragment, dashboardFragment.getTag()).commit();
+
+
+        navid =  headerView.findViewById(R.id.headerid);
+        navprofilepic = headerView.findViewById(R.id.headerprofilepic);
+        navusername = headerView.findViewById(R.id.headerusername);
+        navdesignerid = headerView.findViewById(R.id.headercode);
+        navemail = headerView.findViewById(R.id.headeremail);
+
+        Bundle detailsbundle = getIntent().getExtras();
+        //int mindex = detailsbundle.getInt("id");
+        String mdesignerid = detailsbundle.getString("designerid"),
+                memail = detailsbundle.getString("email"),
+                mdeviceids = detailsbundle.getString("deviceids"),
+                musername = detailsbundle.getString("username");
+        //Toast.makeText(this, "this is " + mindex +" " + mdeviceids, Toast.LENGTH_LONG).show();
+
+        //navid.setText(mindex);
+        navusername.setText(musername);
+        navdesignerid.setText(mdesignerid);
+        navemail.setText(memail);
     }
 
     @Override
@@ -151,9 +180,10 @@ public class DesignersDashboardActivity extends AppCompatActivity implements Nav
 
             case  R.id.nav_profile:
                 mActivityTitle = "Edit Profile";
-                DesignerProfileFragment designerprofileFragment = new DesignerProfileFragment();
+                CompanyProfileFragment designerprofileFragment = new CompanyProfileFragment();
                 FragmentManager profilemanager = getSupportFragmentManager();
                 profilemanager.beginTransaction().replace(R.id.linearLayout_for_fragment, designerprofileFragment, designerprofileFragment.getTag()).commit();
+
                 break;
 
             case R.id.nav_products:
@@ -208,4 +238,5 @@ public class DesignersDashboardActivity extends AppCompatActivity implements Nav
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

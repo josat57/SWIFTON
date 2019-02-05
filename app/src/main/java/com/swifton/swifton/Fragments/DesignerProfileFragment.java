@@ -89,19 +89,19 @@ public class DesignerProfileFragment extends Fragment {
                 try {
                         //get Jsonobjects
 
-                        int mid = designerObject.getJSONObject("data").getInt("id");
-                        String musername = designerObject.getJSONObject("data").getString("username");
-                        String mdesignerid = designerObject.getJSONObject("data").getString("designerid");
-                        String mfirstname = designerObject.getJSONObject("data").getString("firstname");
-                        String mlastname = designerObject.getJSONObject("data").getString("lastname");
-                        String memail = designerObject.getJSONObject("data").getString("email");
-                        String mpassword = designerObject.getJSONObject("data").getString("dpassword");
-                        String maddress = designerObject.getJSONObject("data").getString("daddress");
-                        String mphoneno  = designerObject.getJSONObject("data").getString("phoneno");
-                        String mdposition = designerObject.getJSONObject("data").getString("dposition");
-                        String mdeviceids = designerObject.getJSONObject("data").getString("deviceids");
-                        String mcreated_at = designerObject.getJSONObject("data").getString("created_at");
-                        String mupdated_at = designerObject.getJSONObject("data").getString("updated_at");
+                        int mid = designerObject.getInt("id");
+                        String musername = designerObject.getString("username");
+                        String mdesignerid = designerObject.getString("designerid");
+                        String mfirstname = designerObject.getString("firstname");
+                        String mlastname = designerObject.getString("lastname");
+                        String memail = designerObject.getString("email");
+                        String mpassword = designerObject.getString("dpassword");
+                        String maddress = designerObject.getString("daddress");
+                        String mphoneno  = designerObject.getString("phoneno");
+                        String mdposition = designerObject.getString("dposition");
+                        String mdeviceids = designerObject.getString("deviceids");
+                        String mcreated_at = designerObject.getString("created_at");
+                        String mupdated_at = designerObject.getString("updated_at");
                         Toast.makeText(getActivity(), "Hey "+ musername, Toast.LENGTH_LONG).show();
 //                                DesignersProfile designersProfile =  new DesignersProfile(mid, musername, mdesignerid, mfirstname, mlastname, memail, mpassword, maddress, mphoneno, mdposition, mdeviceids, mcreated_at, mupdated_at);
 //                                mdesignersProfile.add(designersProfile);

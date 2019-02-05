@@ -1,7 +1,9 @@
 package com.swifton.swifton;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -37,6 +39,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    public static final String MyPREFERENCES = "MyPrefs" ;
+    public static final String Name = "nameKey";
+    public static final String Userid = "idKey";
+    public static final String Email = "emailKey";
+    public static final String DesignerId = "designeridkey";
+
+    SharedPreferences sharedpreferences;
+
     ProgressDialog progressDialog;
     TextView SignupLabel,ForgotLabel, deviceUDIDS;
     Button LoginBtn,SignupBtn;
@@ -46,8 +56,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected String enteredUsername;
 
     //Local testing server url
-    String LoginURL = "http:192.168.43.53/swiftonbe/app/login_designers.php";
-    String SignupURL = "http:192.168.43.53/swiftonbe/app/create_designers.php";
+    String LoginURL = "http:192.168.43.89/swiftonbe/app/login_designers.php";
+    String SignupURL = "http:192.168.43.89/swiftonbe/app/create_designers.php";
+
+    //String LoginURL = "http:10.11.32.56/swiftonbe/app/login_designers.php";
+    //String SignupURL = "http:10.11.32.56/swiftonbe/app/create_designers.php";
 
     //Live testing server url
     //String LoginURL = "https://swiftontest.000webhostapp.com/swiftonbe/app/login_designers.php";
@@ -82,6 +95,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button buttonToolbarTabs = findViewById(R.id.buttonToolbarTabs);
         buttonToolbarTabs.setOnClickListener(this);
 
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
+
     }
 
     @Override
@@ -101,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         GradientDrawable drawable = (GradientDrawable) loginView.getResources().getDrawable(R.drawable.popup_shape);
         drawable.setColor(Color.parseColor("#e6000000"));
         loginView.setBackground(drawable);
-        //final PopupWindow popupWindow = new PopupWindow(loginView, ActionBar.LayoutParams.FILL_PARENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+        //final PopupWindow popupWindow = new PopupWindow(loginView, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
         deviceUDIDS = signupView.findViewById(R.id.deviceID);
         progressDialog = new ProgressDialog(MainActivity.this);
         progressDialog.setCancelable(false);
@@ -180,6 +196,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 LoginBtn = loginView.findViewById(R.id.dLoginBtn);
                 txtloginEmail = loginView.findViewById(R.id.txtdemail);
                 txtloginPassword = loginView.findViewById(R.id.txtdpassword);
+
                 LoginBtn.setOnClickListener(new View.OnClickListener(){
 
                     @Override
@@ -196,6 +213,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 Toast.makeText(getApplicationContext(), "Invalid email address", Toast.LENGTH_SHORT).show();
                             } else if (email.matches(emailPattern) && paswrd.length() >= 6) {
                                 loginUser(email, paswrd);
+
                                 Toast.makeText(getApplicationContext(), "Done!", Toast.LENGTH_LONG).show();
                             } else {
                                 Toast.makeText(getApplicationContext(), "Could not login...", Toast.LENGTH_LONG).show();
@@ -229,18 +247,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 hideDialog();
                 try {
                     JSONObject jObj = new JSONObject(response);
-                    Integer error = jObj.getInt("statuscode");
+                    Integer statuscode = jObj.getInt("statuscode");
+                    Toast.makeText(getApplicationContext(), "this is status code = " + statuscode, Toast.LENGTH_LONG).show();
+                    if (statuscode == 1) {
+                        Integer id = jObj.getInt("id");
+                        String email = jObj.getString("email");
+                        String designerid = jObj.getString("designerid");
+                        String deviceids = jObj.getString("deviceids");
+                        String username = jObj.getString("username");
 
-                    if (error == 1) {
-                        //String user = jObj.getJSONObject("data").getString(("email"));
-                        String user = jObj.getString("data");
                         // Launch User activity
                         Intent homeIntent = new Intent(getApplicationContext(), DesignersDashboardActivity.class);
-                        homeIntent.putExtra("USERNAME", enteredUsername);
-                        homeIntent.putExtra("MESSAGE", "Login Successful!");
+
+                        homeIntent.putExtra("username", username);
+                        homeIntent.putExtra("email", email);
+                        homeIntent.putExtra("id", id);
+                        homeIntent.putExtra("designerid", designerid);
+                        homeIntent.putExtra("deviceids", deviceids);
+
                         startActivity(homeIntent);
+                        createShearedPref(username, id, email, designerid); //create shared preferences
                         overridePendingTransition(R.anim.righttranslate, R.anim.lefttrslate);
-                        homeIntent.putExtra("email", user);
                         String errorMsg = jObj.getString("status");
                         Toast.makeText(getApplicationContext(), "Login " + errorMsg, Toast.LENGTH_LONG).show();
                         //finish();
@@ -280,6 +307,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Adding request to request queue
         AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(strReq,cancel_req_tag);
     }
+
+    //Signup the designer method
     private void signupUsers(final String email, final String password, final String userdevice) {
         //Tag used to cancel the request
         String cancel_req_tag = "Designer Registration";
@@ -297,8 +326,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     if(result == 1){
                         String message = jObj.getString("status");
-                        String user = jObj.getString("data");
-                        Toast.makeText(getApplicationContext(), "Hi "+user +" " +message, Toast.LENGTH_LONG).show();
+                        String useremail = jObj.getString("email");
+                        Toast.makeText(getApplicationContext(), "Hi "+useremail +" " +message, Toast.LENGTH_LONG).show();
                         Intent mainIntent = new Intent(MainActivity.this, MainActivity.class);
                         startActivity(mainIntent);
                         finish();
@@ -353,5 +382,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void hideDialog() {
         if (progressDialog.isShowing())
             progressDialog.dismiss();
+    }
+
+    private void createShearedPref(final String username, final int id, final String email, final String designerid){
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+
+                editor.putString(Name, username);
+                editor.putInt(Userid, id);
+                editor.putString(Email, email);
+                editor.putString(DesignerId, designerid);
+                editor.commit();
+                Toast.makeText(MainActivity.this,"Thanks",Toast.LENGTH_LONG).show();
+
+            }
+        });
+
     }
 }

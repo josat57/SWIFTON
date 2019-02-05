@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="#fff"
-            app:headerLayout="@layout/dashboard_header"
+            app:headerLayout="@layout/designer_dashboard_header"
             app:itemTextColor="@color/colorPrimaryDark"
             app:itemIconTint="@color/colorPrimaryDark"
             app:menu="@menu/designer_dashboard_menu"

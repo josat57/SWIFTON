@@ -43,4 +43,8 @@
     <string name="city">City</string>
     <string name="state">State</string>
     <string name="country">Country</string>
+    <string name="username">Username</string>
+    <string name="postalcode">PostalCode</string>
+    <string name="bio">Bio</string>
+    <string name="updateprofile">Update Profile</string>
 </resources>

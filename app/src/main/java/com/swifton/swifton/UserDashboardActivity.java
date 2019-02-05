@@ -12,6 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.swifton.swifton.Fragments.FavoriteFragment;
 import com.swifton.swifton.Fragments.MeasurementFragment;
@@ -25,6 +28,9 @@ public class UserDashboardActivity extends AppCompatActivity implements Navigati
     private ActionBarDrawerToggle mdrawertoggle;
     private Toolbar mtoolbar;
     private String mActivityTitle;
+
+    TextView navusername, navemail,navuserid, navdeviceuid;
+    ImageView navprofilepic;
 
 
     @Override
@@ -48,11 +54,34 @@ public class UserDashboardActivity extends AppCompatActivity implements Navigati
 
         NavigationView navigationView =  findViewById(R.id.navView);
         navigationView.setNavigationItemSelectedListener(this);
-
+        View headerView = navigationView.getHeaderView(0);
         setupDrawer();
+
         UserHomeFragment homeFragment = new UserHomeFragment();
         FragmentManager managerhm = getSupportFragmentManager();
         managerhm.beginTransaction().replace(R.id.linearLayout_for_fragment, homeFragment, homeFragment.getTag()).commit();
+
+
+        navuserid =  headerView.findViewById(R.id.headeruserid);
+        navprofilepic = headerView.findViewById(R.id.userprofpic);
+        navusername = headerView.findViewById(R.id.headerusername1);
+        navdeviceuid = headerView.findViewById(R.id.headerdeviceid);
+        navemail = headerView.findViewById(R.id.headeruseremail);
+
+        Bundle detailsbundle = getIntent().getExtras();
+        //int mindex = detailsbundle.getInt("id");
+        String  memail = detailsbundle.getString("email"),
+                musername = detailsbundle.getString("username"),
+                mprofilepic = detailsbundle.getString("profilepic"),
+                mdeviceids = detailsbundle.getString("deviceuid");
+
+
+        Toast.makeText(this, "this is "  + mdeviceids, Toast.LENGTH_LONG).show();
+
+        //navprofilepic.setImageBitmap(mprofilepic.toString());
+        navusername.setText(musername);
+        navdeviceuid.setText(mdeviceids);
+        navemail.setText(memail);
     }
 
     @Override
@@ -136,6 +165,12 @@ public class UserDashboardActivity extends AppCompatActivity implements Navigati
                 mActivityTitle = "My Profile";
                 ProfileFragment profileFragment = new ProfileFragment();
                 FragmentManager manager = getSupportFragmentManager();
+                //using Bundle to send data
+                String myemail = String.valueOf(navemail.getText());
+                Bundle bundle = new Bundle();
+                bundle.putString("useremail", myemail);
+                profileFragment.setArguments(bundle); //data being send to SecondFragment
+
                 manager.beginTransaction().replace(R.id.linearLayout_for_fragment, profileFragment, profileFragment.getTag()).commit();
                 break;
 

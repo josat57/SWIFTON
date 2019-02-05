@@ -5,7 +5,36 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@color/colorPrimaryDark"
     tools:context=".Fragments.CompanyProfileFragment">
+
+    <RelativeLayout
+        android:id="@+id/profileexists"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDarkFaid"
+        android:visibility="visible">
+        <TextView
+            android:id="@+id/textExit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="X"
+            android:padding="10dp"
+            android:textSize="50sp"
+            android:fontFamily="@font/roboto_thin"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="16dp" />
+        <TextView
+            android:id="@+id/textexists"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:hint="Create company Profile"
+            android:textSize="50sp"
+            android:layout_centerInParent="true"
+            android:textAlignment="center"
+            android:fontFamily="@font/roboto_thin"/>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,7 +42,7 @@
         android:background="#6ef4f3f5">
 
         <ImageView
-            android:id="@+id/profileLogo"
+            android:id="@+id/cprofileLogo"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:src="@drawable/ic_microphone_black_48dp"
@@ -27,35 +56,50 @@
             android:layout_gravity="top|start"
             android:src="@drawable/ic_star"
             android:tint="@color/colorGray"
-            android:layout_margin="16dp"/>
+            android:layout_marginTop="150dp"
+            android:layout_marginStart="16dp"/>
         <TextView
             android:id="@+id/comlevel"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:padding="10dp"
             android:hint="Premium"
             android:layout_below="@+id/profileLogo"/>
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/editProfileFAB"
+        <TextView
+            android:id="@+id/comrating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fabSize="normal"
-            android:src="@drawable/ic_edit"
-            android:layout_margin="16dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:padding="10dp"
+            android:hint="Rating"
             android:layout_alignParentEnd="true"
-            app:backgroundTint="@color/colorPrimaryDark"/>
+            android:layout_below="@+id/profileLogo"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/compProfileFAB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginTop="150dp"
+            android:src="@drawable/ic_edit"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:fabSize="normal" />
     </RelativeLayout>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDarkFaid">
+        android:background="@color/colorWhite">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="0dp"
             android:orientation="vertical"
             android:padding="20dp">
 
@@ -65,86 +109,109 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:padding="5dp"
+                android:visibility="gone"
+                android:textColorHint="@color/colorBlack"
+                android:textColor="@color/colorBlack"
                 android:hint="username"/>
 
             <TextView
                 android:id="@+id/comname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:padding="5dp"
-                android:hint="company name"/>
+                android:hint="company name"
+                android:textColorHint="@color/colorBlack"
+                android:textColor="@color/colorBlack"/>
 
             <TextView
                 android:id="@+id/comregno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:padding="5dp"
-                android:hint="Registration Number"/>
+                android:hint="Registration Number"
+                android:textColorHint="@color/colorBlack"
+                android:textColor="@color/colorBlack"/>
 
             <TextView
                 android:id="@+id/comemail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:padding="5dp"
-                android:hint="Email"/>
+                android:hint="Email"
+                android:textColorHint="@color/colorBlack"
+                android:textColor="@color/colorBlack"/>
 
             <TextView
                 android:id="@+id/comphone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:padding="5dp"
-                android:hint="Phone"/>
+                android:hint="Phone"
+                android:textColorHint="@color/colorBlack"
+                android:textColor="@color/colorBlack"/>
 
             <TextView
                 android:id="@+id/comzipcode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:padding="5dp"
-                android:hint="Zipcode"/>
+                android:hint="Zipcode"
+                android:textColorHint="@color/colorBlack"
+                android:textColor="@color/colorBlack"/>
 
             <TextView
                 android:id="@+id/comaddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:padding="5dp"
-                android:hint="Address"/>
+                android:hint="Address"
+                android:textColorHint="@color/colorBlack"
+                android:textColor="@color/colorBlack"/>
 
             <TextView
                 android:id="@+id/comcity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:padding="5dp"
-                android:hint="City"/>
+                android:hint="City"
+                android:textColorHint="@color/colorBlack"
+                android:textColor="@color/colorBlack"/>
 
             <TextView
                 android:id="@+id/comstate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:padding="5dp"
-                android:hint="State"/>
+                android:hint="State"
+                android:textColorHint="@color/colorBlack"
+                android:textColor="@color/colorBlack"/>
             <TextView
                 android:id="@+id/comcountry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:padding="5dp"
-                android:hint="Country"/>
+                android:hint="Country"
+                android:textColorHint="@color/colorBlack"
+                android:textColor="@color/colorBlack"/>
 
             <TextView
                 android:id="@+id/comwebsite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:padding="5dp"
-                android:hint="Website"/>
+                android:hint="Website"
+                android:textColorHint="@color/colorBlack"
+                android:textColor="@color/colorBlack"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -172,6 +239,33 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="Status"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="5dp"
+                    android:padding="5dp"/>
+
+                <TextView
+                    android:id="@+id/comcreated"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Level"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="5dp"
+                    android:padding="5dp"/>
+
+                <TextView
+                    android:id="@+id/comupdated"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Result"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="5dp"
+                    android:padding="5dp"/>
+
+                <TextView
+                    android:id="@+id/comdesignerid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Result"
                     android:layout_alignParentEnd="true"
                     android:layout_margin="5dp"
                     android:padding="5dp"/>

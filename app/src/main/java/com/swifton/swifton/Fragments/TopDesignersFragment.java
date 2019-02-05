@@ -1,6 +1,8 @@
 package com.swifton.swifton.Fragments;
 
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -13,6 +15,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
@@ -35,10 +38,15 @@ import static com.swifton.swifton.R.id.recyclerViewTopDesigners;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TopDesignersFragment extends Fragment {
+@TargetApi(Build.VERSION_CODES.M)
+public class TopDesignersFragment extends Fragment implements RecyclerView.OnScrollChangeListener {
 
     TopDesignersAdapter topDesignersAdapter;
     ArrayList<TopDesigners> topdesigners_list;
+
+    private int reqcount = 1;
+
+    RequestQueue requestQueue;
 
     //Local testing server url
     String TopDesignersURL = "http:192.168.43.53/swiftonbe/app/get_designers.php";
@@ -64,17 +72,18 @@ public class TopDesignersFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_top_designers, container, false);
 
-
-        topdesigners_list = new ArrayList<>();
-        topDesignersAdapter = new TopDesignersAdapter(topdesigners_list, getActivity());
-
         final SearchView topdesignersSearch = view.findViewById(R.id.search_topDesigners);
         final RecyclerView recyclerViewtopdesigns = view.findViewById(recyclerViewTopDesigners);
         recyclerViewtopdesigns.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerViewtopdesigns.addItemDecoration(new Space(20, 1));
+
+        topdesigners_list = new ArrayList<>();
+        requestQueue = Volley.newRequestQueue(getActivity());
+        topDesignersAdapter = new TopDesignersAdapter(topdesigners_list, getActivity());
+
         recyclerViewtopdesigns.setAdapter(new TopDesignersAdapter(gettopdesigners(), getContext()));
 
-        topDesignersAdapter = new TopDesignersAdapter(gettopdesigners(),getContext());
+        //topDesignersAdapter = new TopDesignersAdapter(loadTopDesigners(),getContext());
 
         topdesignersSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -178,7 +187,7 @@ public class TopDesignersFragment extends Fragment {
     }
 
     //Load the Top DesignersProfileHolder data
-    private void loadTopDesigners(){
+    private void loadTopDesigners(final int count){
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, TopDesignersURL,
                 new Response.Listener<String>() {
@@ -191,19 +200,19 @@ public class TopDesignersFragment extends Fragment {
                                 JSONObject designerObject = jsonArray.getJSONObject(i);
                                 //get Jsonobjects
 
-                                int id = designerObject.getJSONObject("data").getInt("id");
-                                String username = designerObject.getJSONObject("data").getString("username");
-                                String designerid = designerObject.getJSONObject("data").getString("designerid");
-                                String firstname = designerObject.getJSONObject("data").getString("firstname");
-                                String lastname = designerObject.getJSONObject("data").getString("lastname");
-                                String email = designerObject.getJSONObject("data").getString("email");
-                                String password = designerObject.getJSONObject("data").getString("dpassword");
-                                String address = designerObject.getJSONObject("data").getString("daddress");
-                                String phoneno  = designerObject.getJSONObject("data").getString("phoneno");
-                                String dposition = designerObject.getJSONObject("data").getString("dposition");
-                                String deviceids = designerObject.getJSONObject("data").getString("deviceids");
-                                String created_at = designerObject.getJSONObject("data").getString("created_at");
-                                String updated_at = designerObject.getJSONObject("data").getString("updated_at");
+                                int id = designerObject.getInt("id");
+                                String username = designerObject.getString("username");
+                                String designerid = designerObject.getString("designerid");
+                                String firstname = designerObject.getString("firstname");
+                                String lastname = designerObject.getString("lastname");
+                                String email = designerObject.getString("email");
+                                String password = designerObject.getString("dpassword");
+                                String address = designerObject.getString("daddress");
+                                String phoneno  = designerObject.getString("phoneno");
+                                String dposition = designerObject.getString("dposition");
+                                String deviceids = designerObject.getString("deviceids");
+                                String created_at = designerObject.getString("created_at");
+                                String updated_at = designerObject.getString("updated_at");
 
                                 DesignersProfile designersProfile =  new DesignersProfile(id, username, designerid, firstname, lastname, email, password, address, phoneno, dposition, deviceids, created_at, updated_at);
                             }
@@ -221,5 +230,10 @@ public class TopDesignersFragment extends Fragment {
                 });
 
         Volley.newRequestQueue(getActivity()).add(stringRequest);
+    }
+
+    @Override
+    public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
     }
 }

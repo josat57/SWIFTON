@@ -8,6 +8,7 @@
     android:elevation="8dp">
 
     <ImageView
+        android:id="@+id/userprofpic"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:src="@drawable/swifton_logo"
@@ -17,6 +18,7 @@
         android:scaleY=".8"
         android:scaleX=".8"/>
     <TextView
+        android:id="@+id/headerusername1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Joseph Samuel Tamunobarasinipiri"
@@ -25,11 +27,23 @@
         android:layout_marginEnd="20dp"
         android:layout_marginTop="-15dp" />
     <TextView
+        android:id="@+id/headeruseremail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="josat57@gmail.com"
         android:textSize="20sp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp" />
+
+    <TextView
+        android:id="@+id/headeruserid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"/>
+    <TextView
+        android:id="@+id/headerdeviceid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"/>
 
 </LinearLayout>

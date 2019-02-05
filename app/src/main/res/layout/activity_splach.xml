@@ -7,12 +7,11 @@
     android:background="@drawable/modernessentialstyle"
     android:id="@+id/linlay"
     tools:context="com.swifton.swifton.SplashActivity">
-    <LinearLayout
+    <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/swiftonmontage"
-        android:gravity="center">
+        android:background="@color/colorPrimaryDarkFaid">
 
         <android.support.v7.widget.CardView
             android:id="@+id/cardview"
@@ -21,6 +20,7 @@
             app:cardCornerRadius="90dp"
             app:cardPreventCornerOverlap="true"
             app:cardElevation="6dp"
+            android:layout_centerInParent="true"
             app:cardBackgroundColor="#00ffffff">
 
             <ImageView
@@ -39,9 +39,20 @@
             android:fontFamily="@font/roboto_thin"
             android:text="Don't rush, SwiftON!"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorWhite"
             android:textSize="25sp"
             android:typeface="normal"
+            android:layout_below="@+id/cardview"
             android:visibility="visible" />
-    </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom|center"
+            android:text="Powered by SlickServlet"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/productname"
+            android:padding="10dp"
+            android:textColor="@color/colorPrimaryDark"/>
+    </RelativeLayout>
 </RelativeLayout>

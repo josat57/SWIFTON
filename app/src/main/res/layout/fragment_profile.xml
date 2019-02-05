@@ -3,55 +3,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimaryDark"
     tools:context=".Fragments.ProfileFragment">
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/edituserprofile"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <RelativeLayout
-            android:id="@+id/headerLayout"
             android:layout_width="match_parent"
-            android:elevation="5dp"
-            android:layout_height="wrap_content">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profileDDI"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginBottom="30dp"
-                android:layout_marginTop="30dp"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/circle_shapes"
-                />
-            <ImageView
-                android:id="@+id/ddiEdit"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_below="@+id/profileDDI"
-                android:src="@drawable/ic_edit"
-                android:tint="@color/colorWhite"
-                android:layout_marginTop="-80dp"
-                android:layout_marginStart="170dp"/>
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="20dp"
+            android:background="#6ef4f3f5">
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_edit"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@+id/ddiEdit"/>
+                android:id="@+id/edituserprofileLogo"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/ic_microphone_black_48dp"
+                android:background="@drawable/circleimage"
+                android:scaleType="fitCenter"
+                android:focusableInTouchMode="true"
+                android:outlineProvider="bounds"
+                android:cropToPadding="true"
+                android:adjustViewBounds="true"/>
 
         </RelativeLayout>
 
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/headerLayout"
             android:layout_above="@+id/btnFinish"
-            android:background="#85fffefe">
+            android:background="#ffffff">
 
             <LinearLayout
                 android:id="@+id/linLayout1"
@@ -62,140 +52,368 @@
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="FullName"
+                    android:hint="@string/username"
+                    android:textColorHint="@color/colorBlack"
                     android:layout_margin="20dp">
 
                     <EditText
+                        android:id="@+id/editusername"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPersonName"
                         android:padding="8dp"
+                        android:textColor="@color/colorBlack"
                         android:drawableEnd="@drawable/ic_person"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Address"
+                    android:hint="@string/firstname"
+                    android:textColorHint="@color/colorBlack"
                     android:layout_margin="20dp">
 
                     <EditText
+                        android:id="@+id/editfirstname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:padding="8dp"
+                        android:textColor="@color/colorBlack"
+                        android:drawableEnd="@drawable/ic_person"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/lastname"
+                    android:textColorHint="@color/colorBlack"
+                    android:layout_margin="20dp">
+
+                    <EditText
+                        android:id="@+id/editlastname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:padding="8dp"
+                        android:textColor="@color/colorBlack"
+                        android:drawableEnd="@drawable/ic_person"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/address"
+                    android:textColorHint="@color/colorBlack"
+                    android:layout_margin="20dp">
+
+                    <EditText
+                        android:id="@+id/editaddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textMultiLine"
                         android:padding="8dp"
+                        android:textColor="@color/colorBlack"
                         android:drawableEnd="@drawable/ic_person"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="City"
+                    android:hint="@string/city"
+                    android:textColorHint="@color/colorBlack"
                     android:layout_margin="20dp">
 
                     <EditText
+                        android:id="@+id/editcity"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
                         android:padding="8dp"
+                        android:textColor="@color/colorBlack"
                         android:drawableEnd="@drawable/ic_person"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="State"
+                    android:hint="@string/state"
+                    android:textColorHint="@color/colorBlack"
                     android:layout_margin="20dp">
 
                     <EditText
+                        android:id="@+id/editstate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
                         android:padding="8dp"
+                        android:textColor="@color/colorBlack"
                         android:drawableEnd="@drawable/ic_person"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Postal Code"
+                    android:hint="@string/postalcode"
+                    android:textColorHint="@color/colorBlack"
                     android:layout_margin="20dp">
 
                     <EditText
+                        android:id="@+id/editpostalcode"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPostalAddress"
                         android:padding="8dp"
+                        android:textColor="@color/colorBlack"
                         android:drawableEnd="@drawable/ic_person"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Country"
+                    android:hint="@string/country"
+                    android:textColorHint="@color/colorBlack"
                     android:layout_margin="20dp">
 
                     <EditText
+                        android:id="@+id/editcountry"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textMultiLine"
                         android:padding="8dp"
+                        android:textColor="@color/colorBlack"
                         android:drawableEnd="@drawable/ic_person"/>
                 </android.support.design.widget.TextInputLayout>
+
+                <!--<android.support.design.widget.TextInputLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:hint="@string/email"-->
+                    <!--android:textColorHint="@color/colorBlack"-->
+                    <!--android:layout_margin="20dp">-->
+
+                    <!--<EditText-->
+                        <!--android:id="@+id/editemail"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:inputType="textEmailAddress"-->
+                        <!--android:padding="8dp"-->
+                        <!--android:textColor="@color/colorBlack"-->
+                        <!--android:drawableEnd="@drawable/ic_person"/>-->
+                <!--</android.support.design.widget.TextInputLayout>-->
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Email"
+                    android:hint="@string/phone"
+                    android:textColorHint="@color/colorBlack"
                     android:layout_margin="20dp">
 
                     <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textEmailAddress"
-                        android:padding="8dp"
-                        android:drawableEnd="@drawable/ic_person"/>
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Phone"
-                    android:layout_margin="20dp">
-
-                    <EditText
+                        android:id="@+id/editphone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="phone"
                         android:padding="8dp"
+                        android:textColor="@color/colorBlack"
                         android:drawableEnd="@drawable/ic_person"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Bio"
+                    android:hint="@string/bio"
+                    android:textColorHint="@color/colorBlack"
                     android:layout_margin="20dp">
 
                     <EditText
+                        android:id="@+id/editbio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textLongMessage"
                         android:padding="8dp"
+                        android:textColor="@color/colorBlack"
                         android:drawableEnd="@drawable/ic_person"/>
                 </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:id="@+id/updateBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/updateprofile"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/colorPrimaryDark"/>
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
 
-        <Button
-            android:id="@+id/btnFinish"
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/viewuserprofile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Finish"
-            android:layout_alignParentBottom="true"
-            android:background="@color/colorPrimaryDark"/>
+            android:gravity="center"
+            android:padding="20dp"
+            android:background="#6ef4f3f5">
+
+            <ImageView
+                android:id="@+id/viewuserprofileLogo"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/ic_microphone_black_48dp"
+                android:background="@drawable/circleimage"
+                android:scaleType="fitCenter"
+                android:focusableInTouchMode="true"
+                android:outlineProvider="bounds"
+                android:cropToPadding="true"
+                android:adjustViewBounds="true"/>
+
+        </RelativeLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/viewnestedScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/headerLayout"
+            android:layout_above="@+id/btnFinish"
+            android:background="#ffffff">
+
+            <LinearLayout
+                android:id="@+id/viewlinLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                    <TextView
+                        android:id="@+id/viewusername"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/username"
+                        android:textColorHint="@color/colorBlack"
+                        android:textColor="@color/colorBlack"
+                        android:padding="8dp"
+                        android:drawableEnd="@drawable/ic_person"/>
+
+                    <TextView
+                        android:id="@+id/viewfirstname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/firstname"
+                        android:textColorHint="@color/colorBlack"
+                        android:textColor="@color/colorBlack"
+                        android:padding="8dp"
+                        android:drawableEnd="@drawable/ic_person"/>
+
+                    <TextView
+                        android:id="@+id/viewlastname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/lastname"
+                        android:textColorHint="@color/colorBlack"
+                        android:textColor="@color/colorBlack"
+                        android:padding="8dp"
+                        android:drawableEnd="@drawable/ic_person"/>
+                    <TextView
+                        android:id="@+id/viewaddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/address"
+                        android:textColorHint="@color/colorBlack"
+                        android:textColor="@color/colorBlack"
+                        android:padding="8dp"
+                        android:drawableEnd="@drawable/ic_person"/>
+
+                    <TextView
+                        android:id="@+id/viewcity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/city"
+                        android:textColorHint="@color/colorBlack"
+                        android:textColor="@color/colorBlack"
+                        android:padding="8dp"
+                        android:drawableEnd="@drawable/ic_person"/>
+
+                    <TextView
+                        android:id="@+id/viewstate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/state"
+                        android:textColorHint="@color/colorBlack"
+                        android:textColor="@color/colorBlack"
+                        android:padding="8dp"
+                        android:drawableEnd="@drawable/ic_person"/>
+
+                    <TextView
+                        android:id="@+id/viewpostalcode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/postalcode"
+                        android:textColorHint="@color/colorBlack"
+                        android:textColor="@color/colorBlack"
+                        android:padding="8dp"
+                        android:drawableEnd="@drawable/ic_person"/>
+
+                    <TextView
+                        android:id="@+id/viewcountry"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/country"
+                        android:textColorHint="@color/colorBlack"
+                        android:textColor="@color/colorBlack"
+                        android:padding="8dp"
+                        android:drawableEnd="@drawable/ic_person"/>
+                    <TextView
+                        android:id="@+id/viewemail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/email"
+                        android:textColorHint="@color/colorBlack"
+                        android:textColor="@color/colorBlack"
+                        android:padding="8dp"
+                        android:drawableEnd="@drawable/ic_person"/>
+
+                    <TextView
+                        android:id="@+id/viewphone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/phone"
+                        android:textColorHint="@color/colorBlack"
+                        android:textColor="@color/colorBlack"
+                        android:padding="8dp"
+                        android:drawableEnd="@drawable/ic_person"/>
 
 
-    </RelativeLayout>
+                    <TextView
+                        android:id="@+id/viewbio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/bio"
+                        android:textColorHint="@color/colorBlack"
+                        android:textColor="@color/colorBlack"
+                        android:padding="8dp"
+                        android:drawableEnd="@drawable/ic_person"/>
+
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/toggleFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tooltipText="View Profile"
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:fabSize="normal"
+        android:layout_margin="16dp"
+        android:contextClickable="true"
+        android:src="@drawable/ic_edit"
+        android:layout_gravity="end"/>
 
 </FrameLayout>
