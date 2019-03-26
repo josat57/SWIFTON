@@ -36,7 +36,7 @@ public class DesignersDashboardActivity extends AppCompatActivity implements Nav
     TextView navid, navusername, navemail, navdesignerid;
     ImageView navprofilepic;
     //Designer details local testing server
-    String DesignersURL = "http:192.168.42.27/swiftonbe/app/get_designers.php";
+    String DesignersURL = "http:192.168.43.32/swiftonbe/app/get_designers.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

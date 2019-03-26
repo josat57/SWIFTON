@@ -6,15 +6,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import com.swifton.swifton.Fragments.DesignersFragment;
-import com.swifton.swifton.Fragments.MyOrdersFragment;
+import com.swifton.swifton.Fragments.BrandedDesignersFragment;
+import com.swifton.swifton.Fragments.LatestDesignersFragment;
 import com.swifton.swifton.Fragments.TopDesignersFragment;
 import com.swifton.swifton.R;
 import com.swifton.swifton.ViewPagerAdapter;
 
 public class ToolbarTabs extends AppCompatActivity {
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +31,9 @@ public class ToolbarTabs extends AppCompatActivity {
 //        });
         ViewPager mViewPager = findViewById(R.id.viewpagerDesigners);
         ViewPagerAdapter mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        mViewPagerAdapter.addFragment(DesignersFragment.newInstance(), "Latest DesignersProfileHolder");
-        mViewPagerAdapter.addFragment(TopDesignersFragment.newInstance(), "Top DesignersProfileHolder");
-        mViewPagerAdapter.addFragment(MyOrdersFragment.newInstance(), "Brand DesignersProfileHolder");
+        mViewPagerAdapter.addFragment(LatestDesignersFragment.newInstance(), "Latest Designers");
+        mViewPagerAdapter.addFragment(TopDesignersFragment.newInstance(), "Top Designers");
+        mViewPagerAdapter.addFragment(BrandedDesignersFragment.newInstance(), "Brand Designers");
         mViewPager.setAdapter(mViewPagerAdapter);
         TabLayout mTabLayout = findViewById(R.id.tabsdesigners);
         mTabLayout.setupWithViewPager(mViewPager);

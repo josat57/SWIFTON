@@ -4,7 +4,6 @@ import android.widget.Filter;
 
 import com.swifton.swifton.Adpaters.BrandedDesignersAdapter;
 import com.swifton.swifton.Models.BrandedDesigners;
-import com.swifton.swifton.Models.LatestDesigners;
 
 import java.util.ArrayList;
 
@@ -28,7 +27,7 @@ public class BrandedDesignersFilter extends Filter {
 
             for(int i = 0; i<filterList.size(); i++){
                 if(filterList.get(i).getCompanyname().toUpperCase().contains(charSequence)){
-                    LatestDesigners LDs = new LatestDesigners();
+                    //BrandedDesigners BDs = new BrandedDesigners(i);
                     filterbrandeddesigners.add(filterList.get(i));
                 }
             }

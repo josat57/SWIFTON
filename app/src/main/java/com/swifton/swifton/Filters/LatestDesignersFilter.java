@@ -27,7 +27,7 @@ public class LatestDesignersFilter extends Filter {
 
             for(int i = 0; i<filterList.size(); i++){
                 if(filterList.get(i).getCompanyname().toUpperCase().contains(charSequence)){
-                    LatestDesigners LDs = new LatestDesigners();
+                    //LatestDesigners LDs = new LatestDesigners();
                     filterTopdesigners.add(filterList.get(i));
                 }
             }

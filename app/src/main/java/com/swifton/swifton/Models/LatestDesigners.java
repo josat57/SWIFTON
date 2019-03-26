@@ -1,11 +1,32 @@
 package com.swifton.swifton.Models;
 
 public class LatestDesigners {
-    private Integer id, approvalstatus, level, zipcode;
-    private String companyname, companyregno, companyaddress, country,
-            companystate, companycity,emailaddress, phone, website, companycode, verified, created_at, logo;
+    private Integer id, approvalstatus, level;
+    private String companyname, companyregno, companyaddress, country, zipcode,
+            companystate, companycity,emailaddress, phone, website, companycode, verified, created_at, updated_at, logo;
 
-    public LatestDesigners() {
+    public LatestDesigners(Integer id, Integer approvalstatus, Integer level, String zipcode, String companyname,
+                           String companyregno, String companyaddress, String country, String companystate,
+                           String companycity, String emailaddress, String phone, String website, String companycode,
+                           String verified, String created_at, String updated_at, String logo) {
+        this.id = id;
+        this.approvalstatus = approvalstatus;
+        this.level = level;
+        this.zipcode = zipcode;
+        this.companyname = companyname;
+        this.companyregno = companyregno;
+        this.companyaddress = companyaddress;
+        this.country = country;
+        this.companystate = companystate;
+        this.companycity = companycity;
+        this.emailaddress = emailaddress;
+        this.phone = phone;
+        this.website = website;
+        this.companycode = companycode;
+        this.verified = verified;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+        this.logo = logo;
     }
 
     public Integer getId() {
@@ -32,20 +53,12 @@ public class LatestDesigners {
         this.level = level;
     }
 
-    public Integer getZipcode() {
+    public String getZipcode() {
         return zipcode;
     }
 
-    public void setZipcode(Integer zipcode) {
+    public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
-    }
-
-    public String getLogo() {
-        return logo;
-    }
-
-    public void setLogo(String logo) {
-        this.logo = logo;
     }
 
     public String getCompanyname() {
@@ -142,5 +155,21 @@ public class LatestDesigners {
 
     public void setCreated_at(String created_at) {
         this.created_at = created_at;
+    }
+
+    public String getUpdated_at(){
+        return updated_at;
+    }
+
+    public void setUpdated_at(String updated_at){
+        this.updated_at = updated_at;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 }

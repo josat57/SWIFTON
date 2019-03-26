@@ -21,7 +21,6 @@ import com.swifton.swifton.Helpers.NetCheck;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,20 +32,15 @@ public class SignupActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     String UDIDS;
 
-    protected String enteredUsername;
+    //protected String enteredUsername;
 
-    //String URL= "http:192.168.43.53/swiftonbe/app/signup.php";
+    String URL= "http:192.168.0.114/swiftonbe/app/signup.php";
 
     //Live testing server url
-    String URL = "https://swiftontest.000webhostapp.com/swiftonbe/app/signup.php";
+    //String URL = "https://swiftontest.000webhostapp.com/swiftonbe/app/signup.php";
 
     private static final String TAG = "RegisterActivity";
 
-    private static final String TAG_SUCCESS = "success";
-
-    JSONParser jsonParser=new JSONParser();
-
-    int i=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,31 +102,36 @@ public class SignupActivity extends AppCompatActivity {
         progressDialog.setMessage("Registering you...");
         showDialog();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+
             @Override
             public void onResponse(String response) {
-
                 hideDialog();
                 Log.i("tagconvertstr", "["+response+"]");
                 try {
+                    //JSONArray jsonArray =  new JSONArray(response);
                     JSONObject jObj = new JSONObject(response);
-                    Integer result = jObj.getInt("statuscode");
+                    //for (int x = 0; x < jsonArray.length(); x++) {
+                        //JSONObject jObj =  jsonArray.getJSONObject(x);
+                        Integer result = jObj.getInt("statuscode");
 
-                    if(result == 1){
-                        String message = jObj.getString("status");
-                        //String user = jObj.getString("email");
-                        Toast.makeText(getApplicationContext(), "Hi " +message, Toast.LENGTH_LONG).show();
-                        Intent mainIntent = new Intent(SignupActivity.this, MainActivity.class);
-                        startActivity(mainIntent);
-                        finish();
-                    }else if(result == 2){
-                        String message = jObj.getString("status");
-                        //String user = jObj.getString("email");
-                        Toast.makeText(getApplicationContext(), "Hi " +message, Toast.LENGTH_LONG).show();
-                    }else{
-                        String errorMsg = jObj.getString("status");
-                        //Toast.makeText(getApplicationContext(), name+ " "+ email, Toast.LENGTH_LONG).show();
-                        Toast.makeText(getApplicationContext(), "Sorry " + errorMsg, Toast.LENGTH_LONG).show();
+                        if(result == 1){
+                            String message = jObj.getString("status");
+                            String user = jObj.getString("email");
+                            Toast.makeText(getApplicationContext(), "Hi " +user +message, Toast.LENGTH_LONG).show();
+                            Intent mainIntent = new Intent(SignupActivity.this, MainActivity.class);
+                            startActivity(mainIntent);
+                            finish();
+                        }else if(result == 2){
+                            String message = jObj.getString("status");
+                            //String user = jObj.getString("email");
+                            Toast.makeText(getApplicationContext(), "Hi " +message, Toast.LENGTH_LONG).show();
+                        }else if (result == 0){
+                            String errorMsg = jObj.getString("status");
+                            //Toast.makeText(getApplicationContext(), name+ " "+ email, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Sorry " + errorMsg, Toast.LENGTH_LONG).show();
+                        //}
                     }
+
                 } catch (final JSONException e){
                     e.printStackTrace();
                     runOnUiThread(new Runnable() {
@@ -147,15 +146,15 @@ public class SignupActivity extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Registration Error: " + error.getMessage());
-                Toast.makeText(getApplicationContext(),"Sorry registration failed! "+error.getMessage(), Toast.LENGTH_LONG).show();
+                Log.e(TAG, "Signup Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(),"Sorry signup failed! "+error.getMessage(), Toast.LENGTH_LONG).show();
                 hideDialog();
             }
         }) {
             @Override
             protected Map<String, String> getParams() {
                 // Posting params to register url
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 //params.put("name", name);
                 params.put("email", email);
                 params.put("password", password);

@@ -56,8 +56,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected String enteredUsername;
 
     //Local testing server url
-    String LoginURL = "http:192.168.43.89/swiftonbe/app/login_designers.php";
-    String SignupURL = "http:192.168.43.89/swiftonbe/app/create_designers.php";
+    String LoginURL = "http:192.168.0.114/swiftonbe/app/login_designers.php";
+    String SignupURL = "http:192.168.0.114/swiftonbe/app/create_designers.php";
 
     //String LoginURL = "http:10.11.32.56/swiftonbe/app/login_designers.php";
     //String SignupURL = "http:10.11.32.56/swiftonbe/app/create_designers.php";

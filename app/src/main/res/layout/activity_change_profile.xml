@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChangeProfileActivity"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryLight"
+        android:layout_gravity="top|bottom"
+        android:padding="40dp">
+
+        <ImageView
+            android:id="@+id/ppview"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:background="@drawable/circleimage"
+            android:layout_centerInParent="true"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/gallery_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/ppview"
+            android:layout_alignEnd="@+id/ppview"
+            android:src="@drawable/ic_camera"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:elevation="4dp"/>
+    </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/update_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        app:fabSize="normal"
+        app:elevation="4dp"
+        android:layout_margin="20dp"
+        app:backgroundTint="@color/colorPrimaryDark"
+        android:src="@drawable/ic_sync_black_24dp"
+        android:tint="@color/colorWhite"/>
+
+</LinearLayout>

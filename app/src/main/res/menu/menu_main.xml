@@ -10,6 +10,12 @@ tools:context=".dashboardActivity">
         android:title="Logout"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/edit_profile"
+        android:orderInCategory="2"
+        android:title="Edit Profile"
+        app:showAsAction="never"/>
+
 <item android:id="@+id/action_settings"
     android:title="@string/action_settings"
     android:orderInCategory="100"

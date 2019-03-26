@@ -83,8 +83,7 @@ public class TopDesignsAdapter extends RecyclerView.Adapter implements Filterabl
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                if(options[which].equals("Purchase Ticket"))
-                {
+                if (options[which].equals("Purchase Ticket")) {
                     //Intent DetailsIntent = new Intent(c, EventsDetailsActivity.class);
                     Title= new Bundle(); Description =  new Bundle(); Backdrop = new Bundle();
                     Title.putString("title",nativeItems.get(desc).title);

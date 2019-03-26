@@ -24,7 +24,6 @@ import com.swifton.swifton.R;
 import com.swifton.swifton.ToolBars.ToolbarAndFab;
 
 import java.util.ArrayList;
-
 public class BrandedDesignersAdapter extends RecyclerView.Adapter<BrandedDesignersHolders>implements Filterable {
 
     Context mContext;

@@ -30,7 +30,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,16 +41,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.androidquery.AQuery;
+import com.swifton.swifton.ChangeProfileActivity;
 import com.swifton.swifton.Helpers.AppSingleton;
+import com.swifton.swifton.Helpers.ImageLoader;
 import com.swifton.swifton.Helpers.ParseContent;
 import com.swifton.swifton.R;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -77,6 +82,8 @@ public class ProfileFragment extends Fragment{
     public static final String UserEmail = "loginemailKey";
     public static final String DeeviceUId = "deviceuidkey";
 
+    String musername, museremail;
+
     private static final int PICK_IMAGE_REQUEST =1;
 
     private ParseContent parseContent;
@@ -96,11 +103,13 @@ public class ProfileFragment extends Fragment{
     Button updatebtn;
 
     LinearLayout editprofile, viewprofile;
+    int loader = R.drawable.loader;
 
-    String profileURL = "http:192.168.43.89/swiftonbe/app/get_user.php";
-    //String profileURL = "http:10.11.32.56/swiftonbe/app/get_user.php";
 
-    String updateprofileURL = "http:19.168.43.89/swiftonbe/app/update_user_profile.php";
+    String profileURL = "http:192.168.0.114/swiftonbe/app/get_user_profile.php";
+    //String profileURL = "http:10.11.32.56/swiftonbe/app/get_user_profile.php";
+
+    String updateprofileURL = "http:192.168.0.114/swiftonbe/app/update_user_profile.php";
     //String updateprofileURL = "http:10.11.32.56/swiftonbe/app/update_user_profile.php";
 
     ProgressDialog progressDialog;
@@ -126,19 +135,19 @@ public class ProfileFragment extends Fragment{
         viewprofile = view.findViewById(R.id.viewuserprofile);
         editprofile = view.findViewById(R.id.edituserprofile);
 
-         vprofilepic = view.findViewById(R.id.viewuserprofileLogo);
-         vusername = view.findViewById(R.id.viewusername);
-         vfirstname = view.findViewById(R.id.viewfirstname);
-         vlastname = view.findViewById(R.id.viewlastname);
-         vaddress = view.findViewById(R.id.viewaddress);
-         vcity = view.findViewById(R.id.viewcity);
-         vstate = view.findViewById(R.id.viewstate);
-         vcountry = view.findViewById(R.id.viewcountry);
-         vemail = view.findViewById(R.id.viewemail);
-         vphone = view.findViewById(R.id.viewphone);
+        vprofilepic = view.findViewById(R.id.viewuserprofileLogo);
+        vusername = view.findViewById(R.id.viewusername);
+        vfirstname = view.findViewById(R.id.viewfirstname);
+        vlastname = view.findViewById(R.id.viewlastname);
+        vaddress = view.findViewById(R.id.viewaddress);
+        vcity = view.findViewById(R.id.viewcity);
+        vstate = view.findViewById(R.id.viewstate);
+        vcountry = view.findViewById(R.id.viewcountry);
+        vemail = view.findViewById(R.id.viewemail);
+        vphone = view.findViewById(R.id.viewphone);
         vzipcode = view.findViewById(R.id.viewpostalcode);
 
-         eprofilepic = view.findViewById(R.id.edituserprofileLogo);
+        eprofilepic = view.findViewById(R.id.edituserprofileLogo);
         eusername = view.findViewById(R.id.editusername);
         efirstname = view.findViewById(R.id.editfirstname);
         elastname = view.findViewById(R.id.editlastname);
@@ -172,6 +181,8 @@ public class ProfileFragment extends Fragment{
                 }else {
                     viewprofile.setVisibility(View.GONE);
                     editprofile.setVisibility(View.VISIBLE);
+                    museremail = vemail.getText().toString();
+                    musername = vusername.getText().toString();
                 }
             }
         });
@@ -195,16 +206,16 @@ public class ProfileFragment extends Fragment{
                 //final String request = "logindesigners";
                 final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-                String imagepath = saveImage(userprofilepic); //Convert the image to string format and parse it
+                ///String profileimage = saveImage(userprofilepic); //Convert the image to string format and parse it
 
                 if (firstname.isEmpty() || lastname.isEmpty() || username.isEmpty() || address.isEmpty() || phone.isEmpty()) {
                     Toast.makeText(getActivity(), "All fields are required", Toast.LENGTH_LONG).show();
                 } else if (!email.matches(emailPattern)) {
                     Toast.makeText(getActivity(), "Invalid email address", Toast.LENGTH_SHORT).show();
                 } else if (email.matches(emailPattern)) {
-                    updateUserProfile(email, username, firstname, lastname, address, city, state, country, zipcode, phone, imagepath);
+                    updateUserProfile(username, firstname, lastname, address, city, state, country, zipcode, phone, email);
                 } else {
-                    Toast.makeText(getActivity(), "Could not login...", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Could not update your profile...", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -214,13 +225,25 @@ public class ProfileFragment extends Fragment{
 
             @Override
             public void onClick(View v){
-                if(checkPermissionREAD_EXTERNAL_STORAGE(getActivity())) {
-                    //Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    Intent galleryIntent = new Intent();
-                    galleryIntent.setType("image/*");
-                    galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(Intent.createChooser(galleryIntent, "Select Company Logo"), PICK_IMAGE_REQUEST);
-                }
+//                if(checkPermissionREAD_EXTERNAL_STORAGE(getActivity())) {
+//                    //Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                    Intent galleryIntent = new Intent();
+//                    galleryIntent.setType("image/*");
+//                    galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+//                    startActivityForResult(Intent.createChooser(galleryIntent, "Select Company Logo"), PICK_IMAGE_REQUEST);
+//                }
+
+                Intent ppviewIntent =  new Intent(getActivity(), ChangeProfileActivity.class);
+                String mschema = "appusers";
+
+                ppviewIntent.putExtra("username", musername);
+                ppviewIntent.putExtra("email", museremail);
+                ppviewIntent.putExtra("deviceuid", mschema);
+                Toast.makeText(getActivity(), "hey " + musername +" "+ museremail + " " +mschema, Toast.LENGTH_LONG).show();
+                startActivity(ppviewIntent);
+                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                getActivity().finish();
+
             }
         });
 
@@ -238,7 +261,6 @@ public class ProfileFragment extends Fragment{
 
             @Override
             public void onResponse(String response) {
-
                 Log.i("tagconvertstr", "["+response+"]");
                 hideDialog();
                 try {
@@ -257,14 +279,18 @@ public class ProfileFragment extends Fragment{
                                 country = jObj.getString("country"),
                                 email = jObj.getString("email"),
                                 phone = jObj.getString("phone"),
-                                zipcode = jObj.getString("zipcode");
-                                //deviceuid = jObj.getString("deviceuid"),
-                               // created_at = jObj.getString("created_at"),
-                                //updated_at = jObj.getString("updated_at");
-                        //convert the image string int bytes like this
+                                zipcode = jObj.getString("zipcode"),
+                                //profilepic = jObj.getString("profilepic");
+                                profilepic = "http:192.168.0.114/swiftonbe/profilepicsFarm/mindblown.jpg";
 
-                        byte[] decodedString = Base64.decode(jObj.getString("profilepic"), Base64.DEFAULT);
-                        Bitmap imgBitMap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                        //deviceuid = jObj.getString("deviceuid"),
+                        // created_at = jObj.getString("created_at"),
+                        //updated_at = jObj.getString("updated_at");
+                        //convert the image string int bytes like this
+                        ImageLoader imgLoader = new ImageLoader(getActivity());
+
+//                        byte[] decodedString = Base64.decode(jObj.getString("profilepic"), Base64.DEFAULT);
+//                        Bitmap imgBitMap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
 
                         //mid.setText(id);
@@ -278,11 +304,12 @@ public class ProfileFragment extends Fragment{
                         vemail.setText(email);
                         vphone.setText(phone);
                         vzipcode.setText(zipcode);
-                        vprofilepic.setImageBitmap(imgBitMap);
+                        imgLoader.DisplayImage(profilepic, loader, vprofilepic);
+                        //vprofilepic.setImageBitmap(imgBitMap);
                         //deviceuid.setText(deviceuid);
                         //vcreated_at.setText(created_at);
                         //vupdated_at.setText(updated_at);
-
+                        Toast.makeText(getActivity(), "see the value " + profilepic, Toast.LENGTH_LONG).show();
                         String errorMsg = jObj.getString("status");
                         Toast.makeText(getActivity(), "Profile " + firstname + errorMsg, Toast.LENGTH_LONG).show();
                         //finish();
@@ -292,11 +319,11 @@ public class ProfileFragment extends Fragment{
                     }
                 } catch (final Exception e) {
                     e.printStackTrace();
-                    //Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
-                    //public void run() {
-                    Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG).show();
-                    //}
-                    //});
+                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
             }
         }, new Response.ErrorListener() {
@@ -318,85 +345,15 @@ public class ProfileFragment extends Fragment{
                 return params;
             }
         };
+
+        int socketTimeout = 30000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        strReq.setRetryPolicy(policy);
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(strReq);
+
         // Adding request to request queue
         AppSingleton.getInstance(getActivity()).addToRequestQueue(strReq,cancel_req_tag);
-    }
-
-    private void updateUserProfile(final String email, final String username, final String firstname, final String lastname, final String address, final String city,
-                                   final String state, final String country, final String zipcode, final String phone, final String profilepic) {
-        //Tag used to cancel the request
-        String cancel_req_tag = "UserProfile";
-        progressDialog.setMessage("Updating your profile...");
-        showDialog();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, updateprofileURL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                hideDialog();
-                Log.i("tagconvertstr", "["+response+"]");
-                try {
-                    JSONObject jObj = new JSONObject(response);
-                    Integer statuscode = jObj.getInt("statuscode");
-
-                    if(statuscode == 1){
-                        String status = jObj.getString("status");
-                        Toast.makeText(getActivity(), "Your profile has been updated " + status, Toast.LENGTH_LONG).show();
-
-
-                    }else if(statuscode == 0){
-                        String status = jObj.getString("status");
-                        Toast.makeText(getActivity(), "Sorry profile update " +status, Toast.LENGTH_LONG).show();
-                    }else{
-                        String errorMsg = jObj.getString("status");
-                        Toast.makeText(getActivity(), "Sorry " + errorMsg, Toast.LENGTH_LONG).show();
-                    }
-                } catch (final JSONException e){
-                    e.printStackTrace();
-                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
-                        public void run() {
-                            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Profile Update Error: " + error.getMessage());
-                Log.e(TAG, "Error StackTrace: \t" + error.getStackTrace());
-                Toast.makeText(getActivity(),"Update failed! "+error.getMessage(), Toast.LENGTH_LONG).show();
-                try {
-                    byte[] htmlBodyBytes = error.networkResponse.data;
-                    Log.e(TAG, new String(htmlBodyBytes), error);
-                }catch (NullPointerException e){
-                    e.printStackTrace();
-                }
-                if(error.getMessage() == null){
-                    hideDialog();
-                }
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                // Posting params to register url
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("username", username);
-                params.put("firstname", firstname);
-                params.put("lastname", lastname);
-                params.put("useraddress", address);
-                params.put("city", city);
-                params.put("userstate", state);
-                params.put("usercountry", country);
-                params.put("phone", phone);
-                params.put("zipcode", zipcode);
-                params.put("profilepic", profilepic);
-                params.put("email", email);
-                return params;
-            }
-        };
-        // Adding request to request queue
-        AppSingleton.getInstance(getActivity()).addToRequestQueue(stringRequest, cancel_req_tag);
     }
 
     @Override
@@ -512,9 +469,21 @@ public class ProfileFragment extends Fragment{
         }
     }
 
+    private void showDialog() {
+        if (!progressDialog.isShowing())
+            progressDialog.show();
+    }
+
+    private void hideDialog() {
+        if (progressDialog.isShowing())
+            progressDialog.dismiss();
+    }
+
     public String saveImage(Bitmap myBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+        myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        byte[] imageBytes = bytes.toByteArray();
+        //String encodedImage = Base64.encodeToString(imageBytes, Base64.URL_SAFE);
         File wallpaperDirectory = new File(
                 Environment.getExternalStorageDirectory() + IMAGE_DIRECTORY);
         // have the object build the directory structure, if needed.
@@ -529,13 +498,13 @@ public class ProfileFragment extends Fragment{
             }
             f.createNewFile();
             FileOutputStream fo = new FileOutputStream(f);
-            fo.write(bytes.toByteArray());
+            fo.write(imageBytes);
             MediaScannerConnection.scanFile(getActivity(),
                     new String[]{f.getPath()},
                     new String[]{"image/jpeg"}, null);
             fo.close();
             Log.d("TAG", "File Saved::--->" + f.getAbsolutePath());
-            Toast.makeText(getActivity(), "Image Saved successfuly!", Toast.LENGTH_LONG);
+
             return f.getAbsolutePath();
         } catch (IOException e1) {
             e1.printStackTrace();
@@ -543,13 +512,88 @@ public class ProfileFragment extends Fragment{
         return "";
     }
 
-    private void showDialog() {
-        if (!progressDialog.isShowing())
-            progressDialog.show();
-    }
-    private void hideDialog() {
-        if (progressDialog.isShowing())
-            progressDialog.dismiss();
-    }
+    private void updateUserProfile(final String username, final String firstname, final String lastname, final String address, final String city, final String state, final String country, final String zipcode, final String phone, final String email) {
+        // Tag used to cancel the request
+        String cancel_req_tag = "Profile";
+        progressDialog.setMessage("Loading Profile...");
+        showDialog();
+        StringRequest strReq = new StringRequest(Request.Method.POST, updateprofileURL, new Response.Listener<String>() {
 
+            @Override
+            public void onResponse(String response) {
+                Log.i("convertstr", "["+response+"]");
+                hideDialog();
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    int result = jObj.getInt("statuscode");
+                    Toast.makeText(getActivity(), "this is profile status code = " + result, Toast.LENGTH_LONG).show();
+
+                    if (result == 1) {
+                        String message = jObj.getString("status");
+                        //String user = jObj.getString("email");
+                        Toast.makeText(getActivity(), "Hi " + message, Toast.LENGTH_LONG).show();
+//                        Intent mainIntent = new Intent(getActivity(), DesignersDashboardActivity.class);
+//                        startActivity(mainIntent);
+//                        getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+//                        getActivity().finish();
+                        if(viewprofile.getVisibility() == View.GONE){
+                            editprofile.setVisibility(View.GONE);
+                            viewprofile.setVisibility(View.VISIBLE);
+                        }else {
+                            viewprofile.setVisibility(View.GONE);
+                            editprofile.setVisibility(View.VISIBLE);
+                        }
+                    } else if (result == 2) {
+                        String message = jObj.getString("status");
+                        //String user = jObj.getString("email");
+                        Toast.makeText(getActivity(), "Hi " + message, Toast.LENGTH_LONG).show();
+                    } else {
+                        String errorMsg = jObj.getString("status");
+                        //Toast.makeText(getApplicationContext(), name+ " "+ email, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Sorry " + errorMsg, Toast.LENGTH_LONG).show();
+                    }
+                } catch (final Exception e) {
+                    e.printStackTrace();
+                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Profile Error: " + error.getMessage());
+                Toast.makeText(getActivity(), "Profile update failed" + error.getMessage(), Toast.LENGTH_LONG).show();
+                hideDialog();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("username", username);
+                params.put("firstname", firstname);
+                params.put("lastname", lastname);
+                params.put("useraddress", address);
+                params.put("city", city);
+                params.put("userstate", state);
+                params.put("usercountry", country);
+                params.put("phone", phone);
+                params.put("zipcode", zipcode);
+                params.put("email", email);
+                return params;
+            }
+        };
+
+        int socketTimeout = 30000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        strReq.setRetryPolicy(policy);
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(strReq);
+
+        // Adding request to request queue
+        AppSingleton.getInstance(getActivity()).addToRequestQueue(strReq,cancel_req_tag);
+    }
 }

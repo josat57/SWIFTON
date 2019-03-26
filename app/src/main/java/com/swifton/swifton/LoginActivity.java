@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
 
     protected String enteredUsername;
 
-    String URL= "http:192.168.43.89/swiftonbe/app/login.php";
+    String URL= "http:192.168.0.114/swiftonbe/app/login.php";
     //String URL= "http:10.11.32.56/swiftonbe/app/login.php";
 
     //Live testing server url
@@ -115,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
 
-                Log.i("tagconvertstr", "["+response+"]");
+                Log.i(TAG, "["+response+"]");
                 hideDialog();
                 try {
                     JSONObject jObj = new JSONObject(response);
@@ -201,7 +201,7 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString(UserEmail, email);
                 editor.putString(DeviceUId, deviceuid);
                 editor.commit();
-                Toast.makeText(LoginActivity.this,"Thanks " + email,Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this,"Welcome " + email,Toast.LENGTH_LONG).show();
 
             }
         });

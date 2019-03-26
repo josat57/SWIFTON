@@ -24,10 +24,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -35,21 +37,32 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.androidquery.AQuery;
 import com.swifton.swifton.Helpers.AndyUtils;
+import com.swifton.swifton.Helpers.AppSingleton;
 import com.swifton.swifton.Helpers.AsyncTaskCompleteListener;
-import com.swifton.swifton.Helpers.MultiPathRequester;
 import com.swifton.swifton.Helpers.ParseContent;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
-
-import static com.swifton.swifton.Helpers.ImageFilePath.getPath;
+import java.util.Map;
 
 
 public class DesignersProfileActivity extends AppCompatActivity implements AsyncTaskCompleteListener {
@@ -78,14 +91,14 @@ public class DesignersProfileActivity extends AppCompatActivity implements Async
 
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 2;
 
-    String URL= "http:192.168.43.53/swiftonbe/app/create_company.php";
+    String URL= "http:192.168.0.112/swiftonbe/app/create_company.php";
 
     //Live testing server url
     //String URL = "https://swiftontest.000webhostapp.com/swiftonbe/app/create_company.php";
 
     private static final String TAG = "CreateCompanyProfile";
 
-    JSONParser jsonParser=new JSONParser();
+    JSONParser jsonParser = new JSONParser();
 
 
     @Override
@@ -128,19 +141,18 @@ public class DesignersProfileActivity extends AppCompatActivity implements Async
                 final String compcountry = country.getText().toString().trim();
                 final String compwebsite = website.getText().toString().trim();
                 final Bitmap complogo  = ((BitmapDrawable)companyLogo.getDrawable()).getBitmap();
-                //final String encodedLogo = getStringImage(complogo);
                 final String designID = sharedpreferences.getString("designeridkey", "");
 
                 if(compname.isEmpty() || compemail.isEmpty() || compphone.isEmpty() || compaddress.isEmpty() || !compemail.matches(emailPattern)){
                     Toast.makeText(getApplicationContext(), "Please make sure you enter all fields correctly!", Toast.LENGTH_LONG).show();
-                }else if(!compname.isEmpty() && !compemail.isEmpty() && !compaddress.isEmpty() && !compphone.isEmpty() && compemail.matches(emailPattern)){
+                }else if(!compemail.isEmpty() && !compaddress.isEmpty() && !compphone.isEmpty() && compemail.matches(emailPattern)){
 
                     //Call the profile creation method
                     //Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
                     String path = saveImage(complogo);
-                    uploadImageToServer(compname, compregno, compaddress, compcity, compstate,
+                    updateprofile(compname, compregno, compaddress, compcity, compstate,
                             compcountry, comopzip, compemail, compphone, compwebsite, designID, path);
-                    //createCompanyProfile(, encodedLogo);
+
                     Toast.makeText(getApplicationContext(), "Done!", Toast.LENGTH_LONG).show();
                 }else{
                     Toast.makeText(getApplicationContext(), "Cannot create the company profile at the moment", Toast.LENGTH_LONG).show();
@@ -160,8 +172,6 @@ public class DesignersProfileActivity extends AppCompatActivity implements Async
                 }
             }
         });
-
-
     }
 
     @Override
@@ -177,10 +187,12 @@ public class DesignersProfileActivity extends AppCompatActivity implements Async
                 try {
 
                     Toast.makeText(DesignersProfileActivity.this, "Image Saved!", Toast.LENGTH_SHORT).show();
-                    String path =  getPath(this,contentURI);
+
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), contentURI);
+                    String  path = getStringImage(bitmap);
                     Log.i(TAG, "Image Path : " + path);
-                     Bitmap bitmap = BitmapFactory.decodeFile(path);
-                    Bitmap conv_bm = getRoundedBitmap(bitmap, 0);
+                     Bitmap btmap = BitmapFactory.decodeFile(path);
+                    Bitmap conv_bm = getRoundedBitmap(btmap, 0);
                     companyLogo.setImageBitmap(conv_bm);
 
                 } catch (Exception e) {
@@ -353,50 +365,25 @@ public class DesignersProfileActivity extends AppCompatActivity implements Async
 //        AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest, cancel_req_tag);
 //    }
 
-//    private void showDialog(){
-//        if (!progressDialog.isShowing())
-//            progressDialog.show();
-//    }
-//
-//    private void hideDialog() {
-//        if (progressDialog.isShowing())
-//            progressDialog.dismiss();
-//    }
-
-//    public String getStringImage(Bitmap bmp){
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-//        byte[] imageBytes = baos.toByteArray();
-//        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-//        return encodedImage;
-//    }
-
-    private void uploadImageToServer(final String compname, final String compregno, final String compaddress, final String compcity, final String compstate,
-                                     final String compcountry, final String comopzip, final String compemail, final String compphone, final String compwebsite,
-                                     final String designerid, final String path){
-
-        if (!AndyUtils.isNetworkAvailable(DesignersProfileActivity.this)) {
-            Toast.makeText(DesignersProfileActivity.this, "Internet is required!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        HashMap<String, String> map = new HashMap<String, String>();
-        map.put("url", URL);
-        map.put("compname", compname);
-        map.put("compregno", compregno);
-        map.put("compaddress", compaddress);
-        map.put("compcity", compcity);
-        map.put("compstate", compstate);
-        map.put("compcountry", compcountry);
-        map.put("compzip", comopzip);
-        map.put("compemail", compemail);
-        map.put("compphone", compphone);
-        map.put("compwebsite", compwebsite);
-        map.put("designerid", designerid);
-        map.put("complogo", path);
-        new MultiPathRequester(this, map, PICK_IMAGE_REQUEST, this);
-        AndyUtils.showSimpleProgressDialog(this);
+    private void showDialog(){
+        if (!progressDialog.isShowing())
+            progressDialog.show();
     }
+
+    private void hideDialog() {
+        if (progressDialog.isShowing())
+            progressDialog.dismiss();
+    }
+
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
+    }
+
+
 
     @Override
     public void onTaskCompleted(String response, int serviceCode) {
@@ -415,7 +402,9 @@ public class DesignersProfileActivity extends AppCompatActivity implements Async
 
     public String saveImage(Bitmap myBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+        myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        byte[] imageBytes = bytes.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.URL_SAFE);
         File wallpaperDirectory = new File(
                 Environment.getExternalStorageDirectory() + IMAGE_DIRECTORY);
         // have the object build the directory structure, if needed.
@@ -430,7 +419,7 @@ public class DesignersProfileActivity extends AppCompatActivity implements Async
             }
             f.createNewFile();
             FileOutputStream fo = new FileOutputStream(f);
-            fo.write(bytes.toByteArray());
+            fo.write(Integer.parseInt(encodedImage));
             MediaScannerConnection.scanFile(this,
                     new String[]{f.getPath()},
                     new String[]{"image/jpeg"}, null);
@@ -442,5 +431,96 @@ public class DesignersProfileActivity extends AppCompatActivity implements Async
             e1.printStackTrace();
         }
         return "";
+    }
+
+    private void updateprofile( final String compname, final String compregno, final String compaddress, final String compcity, final String compstate,
+                            final String compcountry, final String comopzip, final String compemail, final String compphone, final String compwebsite,
+                            final String designerid, final String encodedlogo) {
+
+        //Tag used to cancel the request
+        String cancel_req_tag = "Update Profile";
+        progressDialog.setMessage("Creating Profile now!...");
+        showDialog();
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("convertstr", "["+response+"]");
+                        Log.d("uploade", response);
+                        try {
+                            JSONObject jObj = new JSONObject(response);
+                            int result = jObj.getInt("statuscode");
+                            if (result == 1) {
+                                String message = jObj.getString("status");
+                                //String user = jObj.getString("email");
+                                Toast.makeText(getApplicationContext(), "Hi " + message, Toast.LENGTH_LONG).show();
+                                Intent mainIntent = new Intent(DesignersProfileActivity.this, DesignersDashboardActivity.class);
+                                startActivity(mainIntent);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                finish();
+                            } else if (result == 2) {
+                                String message = jObj.getString("status");
+                                //String user = jObj.getString("email");
+                                Toast.makeText(getApplicationContext(), "Hi " + message, Toast.LENGTH_LONG).show();
+                            } else {
+                                String errorMsg = jObj.getString("status");
+                                //Toast.makeText(getApplicationContext(), name+ " "+ email, Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Sorry " + errorMsg, Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Profile Update Error: \t" + error.getMessage());
+                Log.e(TAG, "Error StackTrace: \t" + Arrays.toString(error.getStackTrace()));
+                Toast.makeText(DesignersProfileActivity.this,"Update failed! "+error.getMessage(), Toast.LENGTH_LONG).show();
+                try {
+                    byte[] htmlBodyBytes = error.networkResponse.data;
+                    Log.e(TAG, new String(htmlBodyBytes), error);
+                }catch (NullPointerException e){
+                    e.printStackTrace();
+                }
+                if(error.getMessage() == null){
+                    hideDialog();
+                }
+                Toast.makeText(getApplicationContext(), "Sorry profile update failed! " +
+                        error.getMessage(), Toast.LENGTH_LONG).show();
+                hideDialog();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("compname", compname);
+                params.put("compregno", compregno);
+                params.put("compaddress", compaddress);
+                params.put("compcity", compcity);
+                params.put("compstate", compstate);
+                params.put("compcountry", compcountry);
+                params.put("compzip", comopzip);
+                params.put("compemail", compemail);
+                params.put("compphone", compphone);
+                params.put("compwebsite", compwebsite);
+                params.put("designerid", designerid);
+                params.put("filename", encodedlogo);
+                return params;
+            }
+        };
+        {
+            int socketTimeout = 30000;
+            RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+            stringRequest.setRetryPolicy(policy);
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(stringRequest);
+
+            //Adding request to request queue
+            AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest, cancel_req_tag);
+        }
+
     }
 }

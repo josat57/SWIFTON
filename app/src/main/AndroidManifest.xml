@@ -3,7 +3,7 @@
     package="com.swifton.swifton">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -14,13 +14,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
+        <activity android:name=".ChangeProfileActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <intent-filter>
                 <data
                     android:host="www.swifton.com"
@@ -31,10 +34,11 @@
                 <data
                     android:host="swifton"
                     android:scheme="http" />
+
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
@@ -48,7 +52,7 @@
         <activity android:name=".JustTest" />
         <activity android:name=".BuyActivity" />
         <activity android:name=".DesignersDashboardActivity" />
-        <activity android:name=".DesignersProfileActivity"></activity>
+        <activity android:name=".DesignersProfileActivity" />
     </application>
 
 </manifest>

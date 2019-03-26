@@ -1,5 +1,6 @@
 package com.swifton.swifton;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +34,7 @@ public class UserDashboardActivity extends AppCompatActivity implements Navigati
     TextView navusername, navemail,navuserid, navdeviceuid;
     ImageView navprofilepic;
 
+    LinearLayout editprofile, viewprofile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,9 @@ public class UserDashboardActivity extends AppCompatActivity implements Navigati
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        viewprofile = findViewById(R.id.viewuserprofile);
+        editprofile = findViewById(R.id.edituserprofile);
 
         mdrawaerLayout = findViewById(R.id.drawerLayout);
 //        mdrawertoggle = new ActionBarDrawerToggle(this,mdrawaerLayout,R.string.open,R.string.close);
@@ -144,8 +150,36 @@ public class UserDashboardActivity extends AppCompatActivity implements Navigati
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//        if (id == R.id.edit_logout) {
+//
+//        }
+        switch (id) {
+            case R.id.action_settings:
+                Intent settingsIntent = new Intent(UserDashboardActivity.this, SettingsActivity.class);
+                startActivity(settingsIntent);
+                overridePendingTransition(R.anim.fade_in_left, R.anim.fade_in_right);
+                Toast.makeText(this, "Settings", Toast.LENGTH_LONG).show();
+                break;
+
+            case R.id.edit_profile:
+                if(viewprofile.getVisibility() == View.GONE){
+
+                    viewprofile.setVisibility(View.VISIBLE);
+                }else {
+                    viewprofile.setVisibility(View.GONE);
+                }
+                break;
+
+            case R.id.edit_logout:
+                Intent logoutIntent = new Intent(UserDashboardActivity.this, MainActivity.class);
+                startActivity(logoutIntent);
+                overridePendingTransition(R.anim.fade_in_left, R.anim.fade_in_right);
+                finish();
+                Toast.makeText(UserDashboardActivity.this, "Logout successful", Toast.LENGTH_LONG).show();
+                break;
         }
 
         // Activate the navigation drawer toggle

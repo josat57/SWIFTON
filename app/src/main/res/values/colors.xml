@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <resources>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorGray">#A9A9A9</color>
@@ -12,6 +11,6 @@
     <color name="colorPrimary">#3e0c63</color>
     <color name="colorAccent">#c382f2</color>
     <color name="colorPrimaryDarkFaid">#c6450078</color>
-.    <color name="colorDarkBlue">#191970</color>
+    <color name="colorDarkBlue">#191970</color>
     <color name="colorBlack">#000000</color>
 </resources>

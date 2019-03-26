@@ -27,7 +27,7 @@ public class TopDesginersFilter extends Filter {
 
             for(int i = 0; i<filterList.size(); i++){
                 if(filterList.get(i).getCompanyname().toUpperCase().contains(charSequence)){
-                    TopDesigners TDs = new TopDesigners();
+                    //TopDesigners TDs = new TopDesigners();
                     filterTopdesigners.add(filterList.get(i));
                 }
             }

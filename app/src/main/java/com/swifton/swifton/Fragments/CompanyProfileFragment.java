@@ -56,8 +56,8 @@ public class CompanyProfileFragment extends Fragment {
 
 
 
-    //String CompanyURL = "http:192.168.43.53/swiftonbe/app/get_company_profile.php";
-    String CompanyURL = "http:10.11.32.56/swiftonbe/app/get_company_profile.php";
+    String CompanyURL = "http:192.168.0.106/swiftonbe/app/get_company_profile.php";
+    //String CompanyURL = "http:10.11.32.56/swiftonbe/app/get_company_profile.php";
 
     ProgressDialog progressDialog;
 

@@ -5,6 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.TopDesignersFragment">
 
-   <include layout="@layout/top_designers_container"/>
+   <include layout="@layout/designers_container"/>
 
 </FrameLayout>
