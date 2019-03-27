@@ -63,10 +63,10 @@ public class ChangeProfileActivity extends AppCompatActivity {
     ImageView profilepic;
     private static final int PICK_IMAGE_REQUEST =1;
 
-    String profileURL = "http:192.168.43.32/swiftonbe/app/uploadpics.php";
+    String profileURL = "http:192.168.0.109/swiftonbe/app/uploadpics.php";
     //String updateprofileURL = "http:10.11.32.56/swiftonbe/app/update_user_profile.php";
 
-    ProgressDialog progressDialog;
+    private ProgressDialog mprogressDialog;
 
     private ParseContent parseContent;
     private static final String IMAGE_DIRECTORY = "/profilepicsFarm";
@@ -74,6 +74,9 @@ public class ChangeProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_profile);
+
+        mprogressDialog = new ProgressDialog(ChangeProfileActivity.this);
+        mprogressDialog.setCancelable(false);
 
         GalleryBtn = findViewById(R.id.gallery_btn);
         UpdateBtn = findViewById(R.id.update_btn);
@@ -83,11 +86,10 @@ public class ChangeProfileActivity extends AppCompatActivity {
         final String  email = detailsbundle.getString("email"),
                 username = detailsbundle.getString("username"),
                 schema = detailsbundle.getString("schema");
-        Log.d(TAG, email);
 
-        if(!email.isEmpty()){
-            Toast.makeText(ChangeProfileActivity.this, "Email " + email, Toast.LENGTH_SHORT).show();
-
+        if(!email.isEmpty() && !schema.isEmpty()){
+            Toast.makeText(ChangeProfileActivity.this, "Email " + email + "schema " + schema, Toast.LENGTH_SHORT).show();
+            finish();
         }else{
             Toast.makeText(ChangeProfileActivity.this, "the email is empty " + email, Toast.LENGTH_LONG).show();
         }
@@ -245,13 +247,13 @@ public class ChangeProfileActivity extends AppCompatActivity {
     }
 
     private void showDialog() {
-        if (!progressDialog.isShowing())
-            progressDialog.show();
+        if (!mprogressDialog.isShowing())
+            mprogressDialog.show();
     }
 
     private void hideDialog() {
-        if (progressDialog.isShowing())
-            progressDialog.dismiss();
+        if (mprogressDialog.isShowing())
+            mprogressDialog.dismiss();
     }
 
     public String saveImage(Bitmap myBitmap) {
@@ -290,7 +292,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
     private void updateUserProfile(final String username, final String email, final String filename, final String schema) {
         // Tag used to cancel the request
         String cancel_req_tag = "Profile";
-        //progressDialog.setMessage("Updating Profile");
+        mprogressDialog.setMessage("Updating Profile");
         showDialog();
         StringRequest strReq = new StringRequest(Request.Method.POST, profileURL, new Response.Listener<String>() {
 
