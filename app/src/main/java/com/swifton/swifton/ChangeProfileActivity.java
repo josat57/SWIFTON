@@ -63,7 +63,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
     ImageView profilepic;
     private static final int PICK_IMAGE_REQUEST =1;
 
-    String updateprofileURL = "http:192.168.0.114/swiftonbe/app/update_user_profile.php";
+    String profileURL = "http:192.168.43.32/swiftonbe/app/uploadpics.php";
     //String updateprofileURL = "http:10.11.32.56/swiftonbe/app/update_user_profile.php";
 
     ProgressDialog progressDialog;
@@ -114,11 +114,12 @@ public class ChangeProfileActivity extends AppCompatActivity {
                 //final String request = "logindesigners";
                 final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-                final String profileimg = saveImage(userprofilepic); //Convert the image to string format and parse it
+                String profileimg = saveImage(userprofilepic); //Convert the image to string format and parse it
                 if(!profileimg.isEmpty()) {
                     if (!email.isEmpty() && !email.matches(emailPattern)) {
                         Toast.makeText(ChangeProfileActivity.this, "Invalid email address", Toast.LENGTH_SHORT).show();
                     } else if (email.matches(emailPattern)) {
+                        Toast.makeText(ChangeProfileActivity.this, "attempting to update", Toast.LENGTH_SHORT).show();
                         updateUserProfile(username, email, profileimg, schema);
                     } else {
                         Toast.makeText(ChangeProfileActivity.this, "An annonynous profile...", Toast.LENGTH_LONG).show();
@@ -286,12 +287,12 @@ public class ChangeProfileActivity extends AppCompatActivity {
         return "";
     }
 
-    private void updateUserProfile(final String username, final String email, final String profileimg, final String schema) {
+    private void updateUserProfile(final String username, final String email, final String filename, final String schema) {
         // Tag used to cancel the request
         String cancel_req_tag = "Profile";
-        progressDialog.setMessage("Loading Profile...");
+        progressDialog.setMessage("Updating Profile");
         showDialog();
-        StringRequest strReq = new StringRequest(Request.Method.POST, updateprofileURL, new Response.Listener<String>() {
+        StringRequest strReq = new StringRequest(Request.Method.POST, profileURL, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -314,7 +315,6 @@ public class ChangeProfileActivity extends AppCompatActivity {
                         Toast.makeText(ChangeProfileActivity.this, "Hi " + message, Toast.LENGTH_LONG).show();
                     } else {
                         String errorMsg = jObj.getString("status");
-                        //Toast.makeText(getApplicationContext(), name+ " "+ email, Toast.LENGTH_LONG).show();
                         Toast.makeText(ChangeProfileActivity.this, "Sorry " + errorMsg, Toast.LENGTH_LONG).show();
                     }
                 } catch (final Exception e) {
@@ -340,7 +340,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("username", username);
                 params.put("email", email);
-                params.put("profilepic", profileimg);
+                params.put("filename", filename);
                 params.put("schema", schema);
                 return params;
             }

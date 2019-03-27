@@ -106,10 +106,10 @@ public class ProfileFragment extends Fragment{
     int loader = R.drawable.loader;
 
 
-    String profileURL = "http:192.168.0.114/swiftonbe/app/get_user_profile.php";
+    String profileURL = "http:192.168.43.32/swiftonbe/app/get_user_profile.php";
     //String profileURL = "http:10.11.32.56/swiftonbe/app/get_user_profile.php";
 
-    String updateprofileURL = "http:192.168.0.114/swiftonbe/app/update_user_profile.php";
+    String updateprofileURL = "http:192.168.43.32/swiftonbe/app/update_user_profile.php";
     //String updateprofileURL = "http:10.11.32.56/swiftonbe/app/update_user_profile.php";
 
     ProgressDialog progressDialog;
@@ -515,7 +515,7 @@ public class ProfileFragment extends Fragment{
     private void updateUserProfile(final String username, final String firstname, final String lastname, final String address, final String city, final String state, final String country, final String zipcode, final String phone, final String email) {
         // Tag used to cancel the request
         String cancel_req_tag = "Profile";
-        progressDialog.setMessage("Loading Profile...");
+        progressDialog.setMessage("Updating Profile...");
         showDialog();
         StringRequest strReq = new StringRequest(Request.Method.POST, updateprofileURL, new Response.Listener<String>() {
 
