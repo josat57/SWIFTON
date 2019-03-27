@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
 
     protected String enteredUsername;
 
-    String URL= "http:192.168.43.32/swiftonbe/app/login.php";
+    String URL= "http:192.168.0.109/swiftonbe/app/login.php";
     //String URL= "http:10.11.32.56/swiftonbe/app/login.php";
 
     //Live testing server url

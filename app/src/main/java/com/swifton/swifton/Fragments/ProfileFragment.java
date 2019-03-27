@@ -106,10 +106,10 @@ public class ProfileFragment extends Fragment{
     int loader = R.drawable.loader;
 
 
-    String profileURL = "http:192.168.43.32/swiftonbe/app/get_user_profile.php";
+    String profileURL = "http:192.168.0.109/swiftonbe/app/get_user_profile.php";
     //String profileURL = "http:10.11.32.56/swiftonbe/app/get_user_profile.php";
 
-    String updateprofileURL = "http:192.168.43.32/swiftonbe/app/update_user_profile.php";
+    String updateprofileURL = "http:192.168.0.109/swiftonbe/app/update_user_profile.php";
     //String updateprofileURL = "http:10.11.32.56/swiftonbe/app/update_user_profile.php";
 
     ProgressDialog progressDialog;

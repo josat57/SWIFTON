@@ -290,7 +290,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
     private void updateUserProfile(final String username, final String email, final String filename, final String schema) {
         // Tag used to cancel the request
         String cancel_req_tag = "Profile";
-        progressDialog.setMessage("Updating Profile");
+        //progressDialog.setMessage("Updating Profile");
         showDialog();
         StringRequest strReq = new StringRequest(Request.Method.POST, profileURL, new Response.Listener<String>() {
 
