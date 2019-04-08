@@ -28,6 +28,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -49,8 +50,11 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,7 +67,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
     ImageView profilepic;
     private static final int PICK_IMAGE_REQUEST =1;
 
-    String profileURL = "http:192.168.0.109/swiftonbe/app/uploadpics.php";
+    String profileURL = "http:192.168.0.44/swiftonbe/app/uploadpics.php";
     //String updateprofileURL = "http:10.11.32.56/swiftonbe/app/update_user_profile.php";
 
     private ProgressDialog mprogressDialog;
@@ -83,17 +87,15 @@ public class ChangeProfileActivity extends AppCompatActivity {
         profilepic = findViewById(R.id.ppview);
 
         Bundle detailsbundle = getIntent().getExtras();
-        final String  email = detailsbundle.getString("email"),
-                username = detailsbundle.getString("username"),
-                schema = detailsbundle.getString("schema");
+        final String email = detailsbundle.getString("email");
+        final String username = detailsbundle.getString("username");
+        final String schema = detailsbundle.getString("schema");
 
-        if(!email.isEmpty() && !schema.isEmpty()){
+        if(!email.isEmpty()){
             Toast.makeText(ChangeProfileActivity.this, "Email " + email + "schema " + schema, Toast.LENGTH_SHORT).show();
-            finish();
         }else{
             Toast.makeText(ChangeProfileActivity.this, "the email is empty " + email, Toast.LENGTH_LONG).show();
         }
-
         GalleryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,18 +112,35 @@ public class ChangeProfileActivity extends AppCompatActivity {
         UpdateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Toast.makeText(ChangeProfileActivity.this, "Sending email " +email, Toast.LENGTH_LONG);
                 final Bitmap userprofilepic  = ((BitmapDrawable)profilepic.getDrawable()).getBitmap();
                 //final String request = "logindesigners";
+                String profileimg = saveImage(userprofilepic); //Convert the image to string format and parse it
+                InputStream inputStream = null;//You can get an inputStream using any IO API
+                try {
+                    inputStream = new FileInputStream(profileimg);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                byte[] bytes;
+                byte[] buffer = new byte[8192];
+                int bytesRead;
+                ByteArrayOutputStream output = new ByteArrayOutputStream();
+                try {
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        output.write(buffer, 0, bytesRead);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                bytes = output.toByteArray();
+                String encodedString = Base64.encodeToString(bytes, Base64.DEFAULT);
                 final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-                String profileimg = saveImage(userprofilepic); //Convert the image to string format and parse it
-                if(!profileimg.isEmpty()) {
+                if(!encodedString.isEmpty()) {
                     if (!email.isEmpty() && !email.matches(emailPattern)) {
                         Toast.makeText(ChangeProfileActivity.this, "Invalid email address", Toast.LENGTH_SHORT).show();
                     } else if (email.matches(emailPattern)) {
-                        Toast.makeText(ChangeProfileActivity.this, "attempting to update", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChangeProfileActivity.this, "attempting to update " + schema, Toast.LENGTH_SHORT).show();
                         updateUserProfile(username, email, profileimg, schema);
                     } else {
                         Toast.makeText(ChangeProfileActivity.this, "An annonynous profile...", Toast.LENGTH_LONG).show();
@@ -309,6 +328,10 @@ public class ChangeProfileActivity extends AppCompatActivity {
                         String message = jObj.getString("status");
                         Toast.makeText(ChangeProfileActivity.this, "Hi " + message, Toast.LENGTH_LONG).show();
                         Intent dashboardIntent = new Intent(ChangeProfileActivity.this, UserDashboardActivity.class);
+                        dashboardIntent.putExtra("username", username);
+                        dashboardIntent.putExtra("email", email);
+                        //dashboardIntent.putExtra("profilepic", (Parcelable) profilepic);
+                        //dashboardIntent.putExtra("deviceid", deviceid);
                         startActivity(dashboardIntent);
                         overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
                         finish();

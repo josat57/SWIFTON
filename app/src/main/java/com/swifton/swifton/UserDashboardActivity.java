@@ -77,16 +77,16 @@ public class UserDashboardActivity extends AppCompatActivity implements Navigati
         Bundle detailsbundle = getIntent().getExtras();
         //int mindex = detailsbundle.getInt("id");
         String  memail = detailsbundle.getString("email"),
-                musername = detailsbundle.getString("username"),
-                mprofilepic = detailsbundle.getString("profilepic"),
-                mdeviceids = detailsbundle.getString("deviceuid");
+                musername = detailsbundle.getString("username");
+                //mprofilepic = detailsbundle.getString("profilepic"),
+                //mdeviceids = detailsbundle.getString("deviceuid");
 
 
-        Toast.makeText(this, "this is "  + mdeviceids, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "this is "  + mdeviceids, Toast.LENGTH_LONG).show();
 
-        //navprofilepic.setImageBitmap(mprofilepic.toString());
+        //navprofilepic.setImageBitmap(mprofilepic);
         navusername.setText(musername);
-        navdeviceuid.setText(mdeviceids);
+        //navdeviceuid.setText(mdeviceids);
         navemail.setText(memail);
     }
 

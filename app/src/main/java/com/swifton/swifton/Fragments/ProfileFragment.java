@@ -93,6 +93,7 @@ public class ProfileFragment extends Fragment{
     private Uri filepath;
 
     SharedPreferences sharedpreferences;
+    private String mschema = "appusers";
 
     TextView vusername, vfirstname, vlastname, vaddress, vcity, vstate, vzipcode, vcountry, vemail, vphone, vbio;
 
@@ -106,10 +107,10 @@ public class ProfileFragment extends Fragment{
     int loader = R.drawable.loader;
 
 
-    String profileURL = "http:192.168.0.109/swiftonbe/app/get_user_profile.php";
+    String profileURL = "http:192.168.0.44/swiftonbe/app/get_user_profile.php";
     //String profileURL = "http:10.11.32.56/swiftonbe/app/get_user_profile.php";
 
-    String updateprofileURL = "http:192.168.0.109/swiftonbe/app/update_user_profile.php";
+    String updateprofileURL = "http:192.168.0.44/swiftonbe/app/update_user_profile.php";
     //String updateprofileURL = "http:10.11.32.56/swiftonbe/app/update_user_profile.php";
 
     ProgressDialog progressDialog;
@@ -234,11 +235,9 @@ public class ProfileFragment extends Fragment{
 //                }
 
                 Intent ppviewIntent =  new Intent(getActivity(), ChangeProfileActivity.class);
-                String mschema = "appusers";
-
                 ppviewIntent.putExtra("username", musername);
                 ppviewIntent.putExtra("email", museremail);
-                ppviewIntent.putExtra("deviceuid", mschema);
+                ppviewIntent.putExtra("schema", mschema);
                 Toast.makeText(getActivity(), "hey " + musername +" "+ museremail + " " +mschema, Toast.LENGTH_LONG).show();
                 startActivity(ppviewIntent);
                 getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -292,7 +291,6 @@ public class ProfileFragment extends Fragment{
 //                        byte[] decodedString = Base64.decode(jObj.getString("profilepic"), Base64.DEFAULT);
 //                        Bitmap imgBitMap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
-
                         //mid.setText(id);
                         vusername.setText(username);
                         vfirstname.setText(firstname);
@@ -311,7 +309,7 @@ public class ProfileFragment extends Fragment{
                         //vupdated_at.setText(updated_at);
                         Toast.makeText(getActivity(), "see the value " + profilepic, Toast.LENGTH_LONG).show();
                         String errorMsg = jObj.getString("status");
-                        Toast.makeText(getActivity(), "Profile " + firstname + errorMsg, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getActivity(), "Profile " + firstname + errorMsg, Toast.LENGTH_LONG).show();
                         //finish();
                     } else if(statuscode == 0) {
                         String status = jObj.getString("status");
